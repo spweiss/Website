@@ -1,0 +1,74 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+/* universal */
+
+body {
+  padding-top: 250px;
+  background-color: black;
+  color: white;
+  font-family: monaco, Consolas, "Lucida Console", monospace;
+  text-align: center;
+}
+
+.center {
+  text-align: center;
+  h1 {
+    margin-bottom: 10px;
+  }
+}
+
+.container{
+  height: 100%;
+  width: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: left;
+}
+
+.cursor {
+  border-right: .15em solid white;
+  display: inline-block;
+  animation:
+    blink-caret .75s step-end infinite;
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: white; }
+}
+
+/* typerwriter effect */
+
+.typewriter h1 {
+  font-family: monaco, Consolas, "Lucida Console", monospace;
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid white; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .10em; /* Adjust as needed */
+  animation-delay: 1.5s;
+  animation:
+    typing 1.5s steps(15, end),
+    deleting 1.5s 3.0s steps(15, end),
+    steady 1.5s 4.5s steps(15, end),
+    blink-caret .75s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 3% }
+  to { width: 27% }
+}
+
+/* The deleting effect */
+@keyframes deleting {
+  from { width: 27% }
+  to { width: 3% }
+}
+
+/* The steady state */
+@keyframes steady {
+  from { width: 3% }
+  to { width: 3% }
+}
