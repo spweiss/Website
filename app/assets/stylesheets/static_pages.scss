@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 // @import "bootstrap-sprockets";
 // @import "bootstrap";
+=======
+@import "bootstrap-sprockets";
+@import "bootstrap";
+>>>>>>> homepage
 
 /* universal */
 
@@ -7,6 +12,7 @@ body {
   padding-top: 250px;
   background-color: black;
   color: white;
+<<<<<<< HEAD
 }
 
 section {
@@ -15,6 +21,10 @@ section {
 
 textarea {
   resize: vertical;
+=======
+  font-family: monaco, Consolas, "Lucida Console", monospace;
+  text-align: center;
+>>>>>>> homepage
 }
 
 .center {
@@ -29,7 +39,23 @@ textarea {
   width: auto;
   display: flex;
   justify-content: space-around;
+<<<<<<< HEAD
   align-items: center;
+=======
+  align-items: left;
+}
+
+.cursor {
+  border-right: .15em solid white;
+  display: inline-block;
+  animation:
+    blink-caret .75s step-end infinite;
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: white; }
+>>>>>>> homepage
 }
 
 /* typerwriter effect */
@@ -45,25 +71,42 @@ textarea {
   animation:
     typing 1.5s steps(15, end),
     deleting 1.5s 3.0s steps(15, end),
+<<<<<<< HEAD
+=======
+    steady 1.5s 4.5s steps(15, end),
+>>>>>>> homepage
     blink-caret .75s step-end infinite;
 }
 
 /* The typing effect */
 @keyframes typing {
+<<<<<<< HEAD
   // animation-delay: 1.5s;
+=======
+>>>>>>> homepage
   from { width: 3% }
   to { width: 27% }
 }
 
 /* The deleting effect */
 @keyframes deleting {
+<<<<<<< HEAD
   // animation-delay: 1.5s;
+=======
+>>>>>>> homepage
   from { width: 27% }
   to { width: 3% }
 }
 
+<<<<<<< HEAD
 /* The typewriter cursor effect */
 @keyframes blink-caret {
   from, to { border-color: transparent }
   50% { border-color: white; }
+=======
+/* The steady state */
+@keyframes steady {
+  from { width: 3% }
+  to { width: 3% }
+>>>>>>> homepage
 }
