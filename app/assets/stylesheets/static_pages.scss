@@ -5,8 +5,6 @@ body {
 }
 
 main {
-  width: 100vw;
-  height: 100vh;
   background-color: black;
   align-items: center;
 }
@@ -21,11 +19,16 @@ nav {
   font-size: 2em;
 }
 
+.page {
+  width: 100vw;
+  height: 100vh;
+}
+
 .cursor {
   border-right: .15em solid white;
   display: inline-block;
   animation:
-    blink-caret .75s step-end infinite;
+    blink-caret 1.00s step-end infinite;
 }
 
 @keyframes blink-caret {

@@ -6,7 +6,7 @@ var m = 0;
 var txt = 'Spencer Weiss';
 var msg = 'Hi there!';
 var inv = 'Scroll down...';
-var speed = 100;
+var speed = 80;
 var delay = 2000;
 
 function typeWriter() {
