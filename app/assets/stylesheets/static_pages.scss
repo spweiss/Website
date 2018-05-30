@@ -19,9 +19,25 @@ nav {
   font-size: 2em;
 }
 
+b {
+  padding-top: 25%;
+  position: absolute;
+  background-color: #e6e6e6;
+}
+
+.container {
+  background-color: #a6a6a6;
+}
+
 .page {
   width: 100vw;
   height: 100vh;
+}
+
+.shadow {
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+       -moz-box-shadow: 0 10px 6px -6px #777;
+            box-shadow: 0 10px 6px -6px #777;
 }
 
 .cursor {
