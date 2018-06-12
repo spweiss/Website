@@ -20,13 +20,24 @@ nav {
 }
 
 b {
-  padding-top: 25%;
+  padding-top: 20%;
   position: absolute;
-  background-color: #e6e6e6;
+  background-color: white;
+}
+
+h1, p, hr, a {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .container {
   background-color: #a6a6a6;
+}
+
+.jumbotron {
+  border-radius: 20px;
+  background-color: aqua;
 }
 
 .page {
