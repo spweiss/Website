@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
   <body class="content">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js" integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js" integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous"></script>
 
     <h1>Alphabet Soup</h1>
 
@@ -18,11 +21,18 @@
     where they are replaced by expected values via Hit Probability as a function
     of Exit Velocity and Launch Angle from Statcast. Hit Probability compares
     the EV and LA of a hit against all other hits of the same time since the
-    introduction of Statcast in 2015 (how many batted balls since them?) and determines
-    the likelihood that a batted ball will be a single, double, etc. This
-    transitions the performance vector from field outcome to quality of contact,
-    meaning that it is more tightly linked to hitter performance at the plate.
+    introduction of Statcast in 2015 (how many batted balls since them?) and
+    determines the likelihood that a batted ball will be a single, double, etc.
+    This transitions the performance vector from field outcome to quality of
+    contact, meaning that it is more tightly linked to hitter performance at the
+    plate.
     </p>
+
+    <p class="math">
+    2+\frac{1}{x}
+    </p>
+
+    <p class="math">\Gamma (x) = \int^\infty_0 dx</p>
 
     <p>
     (BA also has the wrong denominator. Does
@@ -47,10 +57,19 @@
     Hit probability article (good examples, videos): https://www.mlb.com/news/statcast-introduces-hit-probability-for-2017/c-217705412
     Hit probability defintion: http://m.mlb.com/glossary/statcast/hit-probability
     xwOBA definition: http://m.mlb.com/glossary/statcast/expected-woba
-    WOBA and xWOBA: https://www.fangraphs.com/blogs/what-can-statcast-tell-us-this-early-in-the-season/
+    xwOBA background: https://www.fangraphs.com/blogs/how-i-use-xwoba/
+    wOBA and xwOBA: https://www.fangraphs.com/blogs/what-can-statcast-tell-us-this-early-in-the-season/
     Baserunning and xwOBA-wOBA: https://www.fangraphs.com/blogs/how-to-beat-statcasts-hitting-metric/
     Guts for every season back to 1871: https://www.fangraphs.com/guts.aspx?type=cn
     </p>
 
   </body>
+
+  <script>
+    var math = document.getElementsByClassName("math");
+    for (var i = 0; i < math.length; i++) {
+      katex.render(math[i].innerHTML, math[i], { displayMode: true });
+    }
+  </script>
+
 </html>
