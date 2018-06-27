@@ -189,11 +189,60 @@
     </p>
 
     <p class="math">\vec{p}_{wOBA} \cdot \vec{w}_{wOBA} = \begin{bmatrix} 1B\\
-      2B\\ 3B\\ HR\\ uBB\\ HBP \end{bmatrix} \cdot \begin{bmatrix} w_1\\ w_2\\ w_3\\
-      w_4\\ w_5\\ w_6 \end{bmatrix}</p>
-    <p class="math">OBP = \frac{\vec{p}_{wOBA} \cdot \vec{w}_{wOBA}}{AB+uBB+HBP+SF} =
-      \frac{1 \cdot 1B + 1 \cdot 2B + 1 \cdot 3B + 1 \cdot HR + 1 \cdot uBB + 1
-      \cdot HBP}{AB+uBB+HBP+SF} = \frac{1B+2B+3B+HR+uBB+HBP}{AB+uBB+HBP+SF}</p>
+      2B\\ 3B\\ HR\\ uBB\\ HBP \end{bmatrix} \cdot \begin{bmatrix} w_1\\ w_2\\
+      w_3\\ w_4\\ w_5\\ w_6 \end{bmatrix}</p>
+    <p class="math">OBP = \frac{\vec{p}_{wOBA} \cdot \vec{w}_{wOBA}}
+      {AB+uBB+HBP+SF} = \frac{w_1 \cdot 1B + w_2 \cdot 2B + w_3 \cdot 3B + w_4
+      \cdot HR + w_5 \cdot uBB + w_6 \cdot HBP}{AB+uBB+HBP+SF}</p>
+
+    <p>
+    While this may at first appear complex, it is really just the same model we
+    have been working with, only now the weights are a bit more abstract. To
+    give you a sense of what they might look like, the linear weights from the
+    2017 season are shown below.
+    </p>
+
+    <p class="math">\vec{w}_{wOBA} = \begin{bmatrix} w_{1B}=0.887\\
+      w_{2B}=1.232\\ w_{3B}=1.552\\ w_{HR}=1.980\\ w_{uBB}=0.693\\ w_{HBP}=0.723
+      \end{bmatrix}</p>
+
+    <p>
+    These values are much closer together than we may have guessed, especially
+    considering that slugging percentage was weighting home runs four times as
+    much as singles!
+    </p>
+
+    <p>
+    wOBA does a very good job at determining the average value that hitters
+    provide when they come to the plate (and for that reason it forms the basis
+    of metrics that aim to value total offensive contribution in terms of wins,
+    like WAR). However, there is another subtle conceptual question to address,
+    and in order to answer it we must delve into relatively uncharted
+    statistical waters and call into question the very way in which our data are
+    measured.
+    </p>
+
+    <p>
+    Thus far, and for the several centuries that baseball has been played and
+    its outcomes recorded, the results of plays are classified based on an
+    official game score. [HISTORY OF THE FIRST RECORDED GAME SCORES VERSUS FULL
+    BOX SCORES.] All of the data feeding into the metrics we have considered
+    thus far can be derived from box scores. However, the introduction of
+    Statcast by the MLB in the [DATE] season has allowed us to collect far more
+    granular data about the events on the field. Statcast [EXPLANATION OF HOW
+    STATCAST WORKS]. Thus, we can use batted ball data to determine the quality
+    of contact that each player makes, independent of the performance of
+    defenders on the opposing team.
+    </p>
+
+    <p>
+    It is these defenders that comprise the confounding factor we hope to
+    overcome. Since the batter's control over the outcome of a play ends when
+    the ball is struck (besides running the bases), the defenders have some
+    control over whether balls in play are recorded as outs, home runs, or
+    anything in between. For instance, consider [SOME GIFS OF PLAYS, PROBABLY
+    ROBBED HOME RUNS].
+    </p>
 
     <p>
     In math-heavy article, each batting stat as a dot product of two vectors,
@@ -230,6 +279,10 @@
     <p>
     Credit Tom Tango for creating wOBA in The Book and Baseball Savant for
     calculating xwOBA
+    </p>
+
+    <p>
+    Include plots showing how accurate each of the metrics are
     </p>
 
     <p>
