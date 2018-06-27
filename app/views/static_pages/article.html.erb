@@ -63,14 +63,91 @@
     ones.
     </p>
 
-    <p class="math">BA = \frac{\vec{p} \cdot \vec{w}}{AB} =
+    <p class="math">\vec{p}_{BA} \cdot \vec{w}_{BA} = \begin{bmatrix} 1B\\
+      2B\\ 3B\\ HR \end{bmatrix} \cdot \begin{bmatrix} 1\\ 1\\ 1\\ 1
+      \end{bmatrix}</p>
+    <p class="math">BA = \frac{\vec{p}_{BA} \cdot \vec{w}_{BA}}{AB} =
       \frac{1 \cdot 1B + 1 \cdot 2B + 1 \cdot 3B + 1 \cdot HR }{AB} =
       \frac{1B+2B+3B+HR}{AB}</p>
 
     <p>
-    To adress the most glaring issues noted above, let's now consider some other
-    existing statistics you may have heard of. First, on-base percentage or OBP.
-    This changes the parameter
+    To address the most glaring issues noted above, let's now consider some
+    other existing statistics you may have heard of. First, on-base percentage
+    (OBP), which is a metric of the frequency that a player reaches base. In
+    order to do that, we will change the definition of the performance vector to
+    include walks (BB) and hit-by-pitch events (HBP), each also weighted as one.
+    In addition, since there are more events that a player can use to reach base
+    according to OBP, we have to make some changes to the denominator. We will
+    set this to at-bats plus walks plus hit-by-pitch events plus sacrifice flies
+    (another way to get out) to capture all possible events in this model.
+    </p>
+
+    <p class="math">\vec{p}_{OBP} \cdot \vec{w}_{OBP} = \begin{bmatrix} 1B\\
+      2B\\ 3B\\ HR\\ BB\\ HBP \end{bmatrix} \cdot \begin{bmatrix} 1\\ 1\\ 1\\
+      1\\ 1\\ 1 \end{bmatrix}</p>
+    <p class="math">OBP = \frac{\vec{p}_{OBP} \cdot \vec{w}_{OBP}}{AB+BB+HBP} =
+      \frac{1 \cdot 1B + 1 \cdot 2B + 1 \cdot 3B + 1 \cdot HR + 1 \cdot BB + 1
+      \cdot HBP}{AB+BB+HBP+SF} = \frac{1B+2B+3B+HR+BB+HBP}{AB+BB+HBP+SF}</p>
+
+    <p>
+    This does a better job of capturing the ways that hitters can contribute
+    outside of hits, but still does not consider the relative values of each
+    event. Starting again from batting average, we now consider another existing
+    metric you may have heard of. Slugging percentage (SLG) is a measure of a
+    player's power, assigning more weight to more bases generated. In this case,
+    the weight for an event is equal to the number of bases generated, so that a
+    double has weight 2 and a home run has weight 4. Thus, the only change we
+    make to batting average to find slugging percentage is to change the
+    elements of the weights vector to 1, 2, 3, and 4.
+    </p>
+
+    <p class="math">\vec{p}_{SLG} \cdot \vec{w}_{SLG} = \begin{bmatrix} 1B\\
+      2B\\ 3B\\ HR \end{bmatrix} \cdot \begin{bmatrix} 1\\ 2\\ 3\\ 4
+      \end{bmatrix}</p>
+    <p class="math">SLG = \frac{\vec{p}_{SLG} \cdot \vec{w}_{SLG}}{AB} =
+      \frac{1 \cdot 1B + 2 \cdot 2B + 3 \cdot 3B + 4 \cdot HR}{AB}</p>
+
+    <p>
+    The numerator of the above expression is sometimes called total bases (TB),
+    since the dot product of the two vectors results in the sum of the bases a
+    player would gain on the hits made.
+    </p>
+
+    <p class="math">SLG = \frac{\vec{p}_{SLG} \cdot \vec{w}_{SLG}}{AB} =
+      \frac{TB}{AB}</p>
+
+    <p>
+    Now we have addressed each of the above problems separately, by accounting
+    for non-hit production in OBP and by weighting different outcomes
+    differently in SLG, but neither is able to fix both problems simultaneously.
+    One common solution is to simply add the two statistics together. This
+    results in a metric aptly named on-base plus slugging (OPS) which has been
+    increasing in popularity among non-sabermetricians in recent years.
+    </p>
+
+    <p class="math">OPS=OBP+SLG=\frac{H+BB+HBP}{AB+BB+HBP+SF}+\frac{TB}{AB}</p>
+
+    <p>
+    OPS does a much better job at encapsulating hitter performance than the
+    metrics we have seen so far, but as you can see above, the formula is a bit
+    of a mess. More importantly though, there is not much conceptual motivation
+    for adding OBP and SLG together besides the fact that it seems like it might
+    help. The easiest way to see this is that the deonominators of the fractions
+    are different. Also, the notion of performance and weight vectors breaks
+    down (the statistics are in different vector spaces). Since it is crudely
+    amalgamating performance over two different reference frames, OPS doesn't
+    have any conceptual meaning. In addition, there is a sneakier reason why
+    slugging percentage (and by extension, OPS) is suboptimal. While it is true
+    that we shouldn't consider singles and triples the same and we can be
+    reasonably confident that triples are worth more than singles, there is no
+    reason we can assume that triples should be weighted exactly three times as
+    much as singles. We will have to make some slightly more subtle adjustments
+    to improve from here, but there is still much more ground to gain.
+    </p>
+
+    <p>
+    As a starting point, we know that we would like to include more outcomes
+    than just hits, so let's establish a vector space with
     </p>
 
     <p>
@@ -95,11 +172,6 @@
     </p>
 
     <p class="math">\Gamma (x) = \int^\infty_0 dx</p>
-
-    <p>
-    (BA also has the wrong denominator. Does
-    slugging?)
-    </p>
 
     <p>
     Compare against BABIP
