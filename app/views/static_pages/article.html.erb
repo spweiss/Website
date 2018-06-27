@@ -85,8 +85,8 @@
     <p class="math">\vec{p}_{OBP} \cdot \vec{w}_{OBP} = \begin{bmatrix} 1B\\
       2B\\ 3B\\ HR\\ BB\\ HBP \end{bmatrix} \cdot \begin{bmatrix} 1\\ 1\\ 1\\
       1\\ 1\\ 1 \end{bmatrix}</p>
-    <p class="math">OBP = \frac{\vec{p}_{OBP} \cdot \vec{w}_{OBP}}{AB+BB+HBP} =
-      \frac{1 \cdot 1B + 1 \cdot 2B + 1 \cdot 3B + 1 \cdot HR + 1 \cdot BB + 1
+    <p class="math">OBP = \frac{\vec{p}_{OBP} \cdot \vec{w}_{OBP}}{AB+BB+HBP+SF}
+      = \frac{1 \cdot 1B + 1 \cdot 2B + 1 \cdot 3B + 1 \cdot HR + 1 \cdot BB + 1
       \cdot HBP}{AB+BB+HBP+SF} = \frac{1B+2B+3B+HR+BB+HBP}{AB+BB+HBP+SF}</p>
 
     <p>
@@ -147,8 +147,53 @@
 
     <p>
     As a starting point, we know that we would like to include more outcomes
-    than just hits, so let's establish a vector space with
+    than just hits, so let's establish a vector space similar to the one in OBP,
+    with singles, doubles, triples, home runs, unintentional walks, and
+    hit-by-pitch events. The denominator, then, will include at-bats,
+    unintentional walks, hit-by-pitch events, and secrifice flys.
     </p>
+
+    <p>
+    This brings us to the weights vector. If the values corresponding to each of
+    the possible events are not the same and are not simply equal to the number
+    of bases gained,then we will have to come up with another method to weight
+    them. A prominent method was theorized in 2007 by Tom Tango, Mitchel
+    Lichtman, and Pete Palmer in <i>The Book: Playing the Percentages in
+    Baseball</i>, which is known simply as <i>The Book</i> by sabermetricians
+    due to its inheritance from Bill James' seminal work in the <i>Baseball
+    Abstract</i> two decades earlier. According to this method, we can assign
+    values to each event at the plate based on their tendency to generate runs
+    in excess of the average play. We won't get into exactly how that is done
+    here, but we arrive at weights that accurately encapsulate value in each
+    season. There are different sets of linear weights for each season to ensure
+    that we adjust for the Run Environment, since overall batting performance
+    has changed significantly over the centuries of baseball and we want to
+    ensure that we have an appropriate reference frame. The set of linear
+    weights for each year since the 1871 season are compiled by Fangraphs, and
+    are thus sometimes referred to as Fangraphs Guts. It should also be noted
+    that these linear weights are assigned values such that the resulting metric
+    is on the same scale as on-base percentage, a useful quality to quickly
+    understand what performances can be considered "good" or "bad." (This is
+    accomplished by setting the value of getting out to zero and adjusting the
+    others correspondingly.)
+    </p>
+
+    <p>
+    CHECK OUT HOW TO CALCULATE LINEAR WEIGHTS HERE: https://www.fangraphs.com/library/principles/linear-weights/
+    </p>
+
+    <p>
+    The metric resulting from the use of linear weights is called weighted
+    on-base average, or wOBA. It uses nearly the same performance vector as OBP
+    and uses the linear weight values from Fangraphs Guts as the weight vector.
+    </p>
+
+    <p class="math">\vec{p}_{wOBA} \cdot \vec{w}_{wOBA} = \begin{bmatrix} 1B\\
+      2B\\ 3B\\ HR\\ uBB\\ HBP \end{bmatrix} \cdot \begin{bmatrix} w_1\\ w_2\\ w_3\\
+      w_4\\ w_5\\ w_6 \end{bmatrix}</p>
+    <p class="math">OBP = \frac{\vec{p}_{wOBA} \cdot \vec{w}_{wOBA}}{AB+uBB+HBP+SF} =
+      \frac{1 \cdot 1B + 1 \cdot 2B + 1 \cdot 3B + 1 \cdot HR + 1 \cdot uBB + 1
+      \cdot HBP}{AB+uBB+HBP+SF} = \frac{1B+2B+3B+HR+uBB+HBP}{AB+uBB+HBP+SF}</p>
 
     <p>
     In math-heavy article, each batting stat as a dot product of two vectors,
