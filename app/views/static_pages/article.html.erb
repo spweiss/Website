@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+  </head>
   <body class="content">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js" integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js" integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous"></script>
 
     <h1>Alphabet Soup</h1>
 
@@ -261,11 +263,9 @@
     plate.
     </p>
 
-    <p class="math">
-    2+\frac{1}{x}
-    </p>
+    <div id="el"><span>$$2+\frac{1}{x}$$</span></div>
 
-    <p class="math">\Gamma (x) = \int^\infty_0 dx</p>
+    <p class="math">$$\Gamma (x) = \int^\infty_0 dx$$</p>
 
     <p>
     Compare against BABIP
@@ -295,13 +295,15 @@
     Guts for every season back to 1871: https://www.fangraphs.com/guts.aspx?type=cn
     </p>
 
-  </body>
+    <script>renderMathInElement(document.body);</script>
 
+  </body>
+  <!--
   <script>
     var math = document.getElementsByClassName("math");
     for (var i = 0; i < math.length; i++) {
       katex.render(math[i].innerHTML, math[i], { displayMode: true });
     }
-  </script>
+  </script>-->
 
 </html>
