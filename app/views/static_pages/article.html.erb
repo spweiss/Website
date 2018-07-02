@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
   </head>
+
   <body class="content">
 
     <h1>Alphabet Soup</h1>
@@ -242,7 +244,8 @@
     overcome. Since the batter's control over the outcome of a play ends when
     the ball is struck (besides running the bases), the defenders have some
     control over whether balls in play are recorded as outs, home runs, or
-    anything in between. For instance, consider [SOME GIFS OF PLAYS, PROBABLY
+    anything in between. The performance of a defender is just luck on the part
+    of the batter. For instance, consider [SOME GIFS OF PLAYS, PROBABLY
     ROBBED HOME RUNS].
     </p>
 
@@ -259,18 +262,19 @@
 
     <p>
     Using these principles, we are now ready to calculate expected wOBA (xwOBA),
-    which uses exptected player performance based on quality of contact data
+    which uses expected player performance based on quality of contact data
     from Statcast and the same linear weights as wOBA for each event. (We
     should note, however, that walks and hit-by-pitch events are still recorded
-    using on-field calls here, since defense is not involved.)
+    using on-field calls here, since defense is not involved with either of
+    those events.)
     </p>
 
     <p>$$\vec{p}_{xwOBA} \cdot \vec{w}_{xwOBA} = \begin{bmatrix} 1B_x\\
       2B_x\\ 3B_x\\ HR_x\\ uBB\\ HBP \end{bmatrix} \cdot \begin{bmatrix}
       w_1\\ w_2\\ w_3\\ w_4\\ w_5\\ w_6 \end{bmatrix}$$</p>
     <p>$$xwOBA = \frac{\vec{p}_{wOBA} \cdot \vec{w}_{wOBA}}
-      {AB+uBB+HBP+SF} = \frac{w_1 \cdot 1B + w_2 \cdot 2B + w_3 \cdot 3B + w_4
-      \cdot HR + w_5 \cdot uBB + w_6 \cdot HBP}{AB+uBB+HBP+SF}$$</p>
+      {AB+uBB+HBP+SF} = \frac{w_1 \cdot 1B_x + w_2 \cdot 2B_x + w_3 \cdot 3B_x +
+      w_4 \cdot HR_x + w_5 \cdot uBB + w_6 \cdot HBP}{AB+uBB+HBP+SF}$$</p>
 
     <p>
     In math-heavy article, each batting stat as a dot product of two vectors,
@@ -324,12 +328,5 @@
     <script>renderMathInElement(document.body);</script>
 
   </body>
-  <!--
-  <script>
-    var math = document.getElementsByClassName("math");
-    for (var i = 0; i < math.length; i++) {
-      katex.render(math[i].innerHTML, math[i], { displayMode: true });
-    }
-  </script>-->
 
 </html>
