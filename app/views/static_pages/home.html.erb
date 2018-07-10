@@ -4,7 +4,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/website/app/assets/javascripts/scroll.js"></script>
     <script>
-    alert("reached");
+    $(function() {
+       $(window).scroll(function () {
+          if ($(this).scrollTop() > 1000) {
+             $("b").addClass("changeColor")
+          }
+          if ($(this).scrollTop() < 1000) {
+             $("b").removeClass("changeColor")
+          }
+       });
+    });
     </script>
   </head>
   <body>
