@@ -1,15 +1,10 @@
-function jump() {
-  /*window.scroll({
-    top: 1000,
-    left: 0,
-    behavior: 'smooth'
-  });*/
-  document.querySelector('b').scrollIntoView({
-    behavior: 'smooth'
-  });
-}
-/*$('a[href^="#"]').on('click', function(event) {
-        $('html, body').stop().animate({
-            scrollTop: $("b").offset().top
-        }, 1000);
-});*/
+$(function() {
+   $(window).scroll(function () {
+      if ($(this).scrollTop() > 50) {
+         $(‘b’).addClass(‘changeColor’)
+      }
+      if ($(this).scrollTop() < 50) {
+         $(‘b’).removeClass(‘changeColor’)
+      }
+   });
+});

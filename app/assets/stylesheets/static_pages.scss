@@ -23,7 +23,7 @@ nav {
 b {
   padding-top: 20%;
   position: absolute;
-  background-color: white;
+  background: black;
 }
 
 h1 {
@@ -47,8 +47,17 @@ img {
   padding-bottom: 1.25em;
 }
 
+
+.changeColor {
+  background: white;
+}
+
 .center {
   text-align: center;
+}
+
+.tiny {
+  font-size: 1px;
 }
 
 .content {
