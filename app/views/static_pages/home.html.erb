@@ -6,10 +6,10 @@
     <script>
     $(function() {
        $(window).scroll(function () {
-          if ($(this).scrollTop() > 1000) {
+          if ($(this).scrollTop() > $(".page").height() * 0.70) {
              $("b").addClass("changeColor")
           }
-          if ($(this).scrollTop() < 1000) {
+          if ($(this).scrollTop() < $(".page").height() * 0.70) {
              $("b").removeClass("changeColor")
           }
        });
