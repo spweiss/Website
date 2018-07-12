@@ -282,11 +282,18 @@
     official game score. [HISTORY OF THE FIRST RECORDED GAME SCORES VERSUS FULL
     BOX SCORES.] All of the data feeding into the metrics we have considered
     thus far can be derived from box scores. However, the introduction of
-    Statcast by the MLB in the [DATE] season has allowed us to collect far more
-    granular data about events on the field. Statcast [EXPLANATION OF HOW
-    STATCAST WORKS]. Thus, we can use batted ball data to determine the quality
-    of contact that each player makes, independent of the performance of
-    defenders on the opposing team.
+    Statcast by the MLB in the 2006 postseason and the rollout to all stadiums
+    in the 2015 season has allowed us to collect far more granular data about
+    events on the field. Statcast simulates the binocular vision of the eyes
+    using two cameras which gather depth perception data when combined with
+    radar. This allows for the position and velocity of the ball and all of
+    the players on the field to be recorded. Thus, we can use resulting batted
+    ball data, called launch angle and exit velocity, to determine the
+    trajectory of each batted ball.
+
+
+    quality of contact that each player makes,
+    independent of the performance of defenders on the opposing team.
     </p>
 
     <p>
@@ -332,6 +339,32 @@
     ball in play. Thus, the only inputs into our performance vector are now
     derived entirely from actions the batter takes, not those of the defender.
     </p>
+
+    <div class="container-fluid center">
+      <div class="row imagetiles">
+        <div class="col-md-12">
+          <img src="/images/spraychart.png" alt="Loading" title="Spray Chart" class="img-fluid imgbox">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md"><p class="caption">A spray chart of balls hit at 101
+          MPH with a launch angle of &deg 34, showing that for this trajectory
+          half of batted balls are outs and of the other half, most are home
+          runs. We can use this data to calculate the expected value of a hit of
+          this type from FanGraphs Guts.</p></div>
+      </div>
+    </div>
+
+    <div class="container-fluid center">
+      <div class="row imagetiles">
+        <div class="col-md-12">
+          <img src="/images/hitprobability.png" alt="Loading" title="Hit Probability" class="img-fluid imgbox">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md"><p class="caption">An excellent plot from FiveThirtyEight showing the expected scoring value for batted balls with different trajectories.</p></div>
+      </div>
+    </div>
 
     <p>
     Using these principles, we are now ready to calculate expected wOBA (xwOBA),
@@ -397,6 +430,7 @@
     wOBA and xwOBA: https://www.fangraphs.com/blogs/what-can-statcast-tell-us-this-early-in-the-season/
     Baserunning and xwOBA-wOBA: https://www.fangraphs.com/blogs/how-to-beat-statcasts-hitting-metric/
     Guts for every season back to 1871: https://www.fangraphs.com/guts.aspx?type=cn
+    FiveThirtyEight EV/LA Hit Probability Plot: https://fivethirtyeight.com/features/the-new-science-of-hitting/
     </p>
 
     <script>renderMathInElement(document.body);</script>
