@@ -212,27 +212,82 @@
     of bases gained,then we will have to come up with another method to weight
     them. A prominent method was theorized in 2007 by Tom Tango, Mitchel
     Lichtman, and Pete Palmer in <i>The Book: Playing the Percentages in
-    Baseball</i>, which is known simply as <i>The Book</i> by sabermetricians
-    due to its inheritance from Bill James' seminal work in the <i>Baseball
-    Abstract</i> two decades earlier. According to this method, we can assign
-    values to each event at the plate based on their tendency to generate runs
-    in excess of the average play. We won't get into exactly how that is done
-    here, but we arrive at weights that accurately encapsulate value in each
-    season. There are different sets of linear weights for each season to ensure
-    that we adjust for the Run Environment, since overall batting performance
-    has changed significantly over the centuries of baseball and we want to
-    ensure that we have an appropriate reference frame. The set of linear
-    weights for each year since the 1871 season are compiled by Fangraphs, and
-    are thus sometimes referred to as Fangraphs Guts. It should also be noted
-    that these linear weights are assigned values such that the resulting metric
-    is on the same scale as on-base percentage, a useful quality to quickly
-    understand what performances can be considered "good" or "bad." (This is
-    accomplished by setting the value of getting out to zero and adjusting the
-    others correspondingly.)
+    Baseball</i> (known simply as <i>The Book</i> to sabermetricians due to its
+    inheritance from Bill James' seminal work in the <i>Baseball Abstract</i>
+    two decades earlier). According to this method, we can assign values to each
+    event at the plate based on their tendency to generate runs in excess of the
+    average play. The weight for each type of hit is derived from the change in
+    Run Expectancy before and after the event for every possible base-out state
+    (all arrangements of players on the bases with zero, one and two outs). For
+    instance, the team would have a higher run expectancy after a single, but an
+    even higher one if that hit had been a double. There are different sets of
+    linear weights for each season to ensure that we adjust for the Run
+    Environment, since overall batting performance has changed significantly
+    over the centuries of baseball and we want to ensure that we have an
+    appropriate reference frame. The set of linear weights for each year since
+    the 1871 season are compiled by Fangraphs, and are thus sometimes referred
+    to as Fangraphs Guts. It should also be noted that these linear weights are
+    assigned values such that the resulting metric is on the same scale as
+    on-base percentage, which is a useful quality since it allows you to quickly
+    understand what performances can be considered "good" or "bad" if you are
+    familiar with OBP. (This is accomplished by setting the value of getting out
+    to zero and adjusting the others correspondingly.)
     </p>
 
+    <hr class="my-4">
+    <p class="center">
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseRunExpectancy" aria-expanded="false" aria-controls="collapseRunExpectancy" class="btn float-right">
+        Run Expectancy? Base-out states? Break it down.
+      </button>
+    </p>
+    <div class="collapse" id="collapseRunExpectancy">
+      <p class="card card-body">
+        To find the value of hitting a double, we start with a Run Expectancy
+        Matrix called RE24. It has an entry for each possible base-out state,
+        for instance the state of bases loaded with no outs. There are eight
+        possible arrangements of players on the bases and there can be zero,
+        one, or two outs, for a total of 24 possible states. For each state, we
+        look at all innings where that state has occurred and find the number of
+        runs scored in each after that state was reached. Then, we divide by the
+        number of innings in the sample to find the expected number of runs
+        scored from that state.
+      </p>
+
+        <div class="container-fluid center">
+          <div class="row imagetiles">
+            <div class="col-md-12">
+              <img src="/images/RE24.png" alt="Loading" title="RE24" class="img-fluid imgbox">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md"><p class="caption">The RE24 matrix based on the
+              2010-2015 seasons, from FanGraphs and Tom Tango.</p></div>
+          </div>
+        </div>
+
+      <p class="card card-body">
+        Now, returning to the calculation of the value
+        of a double, we consider the change in Run Expectancy before and after
+        the hit. Suppose the bases were empty and there were no outs before the
+        double. That means that after the double, there no outs and a player on
+        second. We take subtract the Run Expectancies before and after to find
+        the value added from that play. In another case where you hit a double
+        when there was already a player on third, that player would score, so we
+        would add one to the Run Expectancy of the new state. However, we want
+        to stay context-neutral, meaning that when we measure player
+        performance, we don't care how many players were on base or how many
+        outs there were. Because of this, to calculate the value of a double in
+        general, we take into account the likelihood that the field could have
+        been in any of the possible states, based on how often each one occurs.
+        This gives us the value of a double in terms of its proclivity to
+        produce runs. The values of the other batting events can be calculated
+        in the same way.
+      </p>
+    </div>
+    <hr class="my-4">
+
     <p>
-    CHECK OUT HOW TO CALCULATE LINEAR WEIGHTS HERE: https://www.fangraphs.com/library/principles/linear-weights/
+    INSERT IMAGE OF MLB RUN ENVIRONMENT OVER TIME TO DEMONSTRATE WHY THERE ARE DIFFERENT GUTS VALUES EACH YEAR
     </p>
 
     <p>
@@ -472,6 +527,8 @@
     Baserunning and xwOBA-wOBA: https://www.fangraphs.com/blogs/how-to-beat-statcasts-hitting-metric/
     Guts for every season back to 1871: https://www.fangraphs.com/guts.aspx?type=cn
     FiveThirtyEight EV/LA Hit Probability Plot: https://fivethirtyeight.com/features/the-new-science-of-hitting/
+    Linear weights explanation: https://www.fangraphs.com/library/principles/linear-weights/
+    RE24 explanation: https://www.fangraphs.com/library/misc/re24/
     </p>
 
     <script>renderMathInElement(document.body);</script>
