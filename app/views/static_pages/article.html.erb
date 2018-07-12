@@ -328,14 +328,24 @@
     </div>
 
     <p>
-    In order to avoid the confounding factor of defense, rather than track
-    outcomes on the field for the performance vector, we turn to Statcast. Using
-    the Luanch Angle and Exit Velocity of each ball in play, we can compare such
-    events to all similar ones in the Statcast era and see whether such events
-    are most likely to e recorded as outs, singles, home runs, or any other
-    outcome. We then assign the most likely outcome to be the result of that
-    ball in play. Thus, the only inputs into our performance vector are now
-    derived entirely from actions the batter takes, not those of the defender.
+    In order to avoid the confounding factor of defense and insted rely on the
+    quality of contact of each batted ball, we turn to Statcast. Using the
+    Luanch Angle and Exit Velocity of each ball in play, we can compare such
+    events to all similar ones in the Statcast era and see whether batted balls
+    with the same parameters are most likely to be recorded as outs, singles,
+    home runs, or any other outcome. Thus, to find the value contributed by a
+    ball in play, we find its weighted value based on the probability it will
+    turn into an out, single, double, etc. and based on the linear weights of
+    each event corresponding to the run value of each (from FanGraphs Guts). For
+    instance, if a player strikes the ball at 90 MPH at an angle of 25&deg there
+    could be a 55% chance of an out, a 30% chance of a single, and a 15% chance
+    of a double. To find the value of such an event, we can multiply each of
+    these probabilities by their expected run value. If we do this each time a
+    hitter comes up to the plate, we can base our measure of their performance
+    only on the quality of their contact, not on the result called on the field.
+    Likewise, all of the inputs into our performance vector using this methind
+    are now derived entirely from actions the batter takes, not those of the
+    defender.
     </p>
 
     <div class="container-fluid center">
@@ -365,12 +375,15 @@
     </div>
 
     <p>
-    Using these principles, we are now ready to calculate expected wOBA (xwOBA),
-    which uses expected player performance based on quality of contact data
-    from Statcast and the same linear weights as wOBA for each event. (We
-    should note, however, that walks and hit-by-pitch events are still recorded
-    using on-field calls here, since defense is not involved with either of
-    those events.)
+    Using these principles, we are now ready to calculate expected wOBA (xwOBA).
+    We sum the cumulative probabilities that a player hits a single from the
+    trajectories of each batted ball to find the total expected number of
+    singles, just like we would have summed the number of actual singles that
+    occured using the previous methods. Doing the same for the other types of
+    events, we can now replace the contents of the performance vector with
+    expected values based on quality of contact. (We should note, however, that
+    walks and hit-by-pitch events are still recorded using on-field calls here,
+    since defense is not involved with either of those events.)
     </p>
 
     <p>$$\vec{p}_{xwOBA} \cdot \vec{w}_{xwOBA} = \begin{bmatrix} 1B_x\\
