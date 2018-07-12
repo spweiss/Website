@@ -386,6 +386,36 @@
     since defense is not involved with either of those events.)
     </p>
 
+    <hr class="my-4">
+    <p class="center">
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapsexwOBA" aria-expanded="false" aria-controls="collapsexwOBA" class="btn float-right">
+        You lost me there! Slower this time.
+      </button>
+    </p>
+    <div class="collapse" id="collapsexwOBA">
+      <p class="card card-body">
+        Say a player makes contact with the ball such that it is traveling at a
+        particular speed and launch angle. We can check every Statcast-recorded
+        batted ball with the same speed and launch angle to see how many of
+        those turned into singles, doubles, triples, home runs, and outs. So for
+        that hit, we can find the probability that it will end up being
+        resulting in each of those events. Now, to find the performance of a
+        player, instead of adding up the number of outs, singles, etc., we add
+        up the probabilties of each result from each batted ball to get the
+        expected number of outs, singles, etc. $$vec{p} = \begin{bmatrix} 0\\
+        1\\ 0\\ 0\\ 0\\ 0 \end{bmatrix} + \begin{bmatrix} 0\\ 1\\ 0\\ 0\\ 0\\ 0
+        \end{bmatrix} + \begin{bmatrix} 0\\ 0\\ 0\\ 0\\ 1\\ 0 \end{bmatrix}
+        \rightarrow vec{p} = \begin{bmatrix} 0.130\\ 0.456\\ 0.314\\ 0.051\\
+        0.040\\ 0.009 \end{bmatrix} + \begin{bmatrix} 0.270\\ 0.116\\ 0.344\\
+        0.022\\ 0.140\\ 0.007 \end{bmatrix} + \begin{bmatrix} 0.020\\ 0.136\\
+        0.214\\ 0.181\\ 0.250\\ 0.209 \end{bmatrix}$$ Notice that the total of
+        all of the elements still sums to one in each case, now we just account
+        for multiple possible events. We can then take the dot product of this
+        performance vector with the weights vector as normal.
+      </p>
+    </div>
+    <hr class="my-4">
+
     <p>$$\vec{p}_{xwOBA} \cdot \vec{w}_{xwOBA} = \begin{bmatrix} 1B_x\\
       2B_x\\ 3B_x\\ HR_x\\ uBB\\ HBP \end{bmatrix} \cdot \begin{bmatrix}
       w_1\\ w_2\\ w_3\\ w_4\\ w_5\\ w_6 \end{bmatrix}$$</p>
