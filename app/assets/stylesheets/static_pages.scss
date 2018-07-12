@@ -36,9 +36,6 @@ h2 {
 
 p {
   font-size: 1.25em;
-  @if ($width) < 1000 {
-    width: 100vw;
-  }
 }
 
 hr {
