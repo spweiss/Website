@@ -279,38 +279,36 @@
     <p>
     Thus far, and for the several centuries that baseball has been played and
     its outcomes recorded, the results of plays are classified based on an
-    official game score. [HISTORY OF THE FIRST RECORDED GAME SCORES VERSUS FULL
-    BOX SCORES.] All of the data feeding into the metrics we have considered
-    thus far can be derived from box scores. However, the introduction of
-    Statcast by the MLB in the 2006 postseason and the rollout to all stadiums
-    in the 2015 season has allowed us to collect far more granular data about
-    events on the field. Statcast simulates the binocular vision of the eyes
+    official game score. Box scores have kept the offical record of the results
+    as called on the field since the 1800s. All of the data feeding into the
+    metrics we have considered thus far can be derived from these types of box
+    scores. However, the introduction of Statcast by the MLB in the 2006
+    postseason and the subsequent rollout to all stadiums in the 2015 season has
+    allowed us to collect far more granular data about events on the field than
+    simple hits and outs. Statcast simulates the binocular vision of the eyes
     using two cameras which gather depth perception data when combined with
     radar. This allows for the position and velocity of the ball and all of
     the players on the field to be recorded. Thus, we can use resulting batted
     ball data, called launch angle and exit velocity, to determine the
     trajectory of each batted ball.
-
-
-    quality of contact that each player makes,
-    independent of the performance of defenders on the opposing team.
     </p>
 
     <p>
-    It is these defenders that comprise the confounding factor we now hope to
-    overcome. Since the batter's control over the outcome of a play ends when
-    the ball is struck (besides running the bases), the defenders have some
-    measure of control over whether balls in play are recorded as outs, home
-    runs, or anything in between. T unfortunate part for purposes of our
-    measurement efforts is that the performance of a defender is just luck on
-    the part of the batter. For instance, consider two balls hit with same
-    trajectory (exit velocity and launch angle). One fast defender may sprint
-    and catch the ball for an out where another slower defender may fail to
-    reach the ball, resulting in a base hit. Under all of the statistical
-    paradigms we have consider so far, the first batter would be penalized for
-    an out while the second would be rewarded for a hit, even though their
-    performance at the plate was the same. It is this inconsistency that we hope
-    to correct.
+    If the trajectory of a batted ball is a representation purely of the
+    batter's contribution to a play, then it is the defenders who introduce some
+    confounding factors in our measurement of their performance. Since the
+    batter's control over the outcome of a play ends when the ball is struck
+    (besides running the bases), the defenders have some measure of control over
+    whether balls in play are recorded as outs, home runs, or anything in
+    between. The unfortunate part for purposes of our measurement efforts is
+    that the performance of a defender is just luck on the part of the batter.
+    For instance, consider two balls hit with same trajectory (exit velocity and
+    launch angle). One fast defender may sprint and catch the ball for an out
+    where another slower defender may fail to reach the ball, resulting in a
+    base hit. Under all of the statistical paradigms we have consider so far,
+    the first batter would be penalized for an out while the second would be
+    rewarded for a hit, even though their performance at the plate was the same.
+    It is this inconsistency that we hope to correct.
     </p>
 
     <div class="container-fluid center">
@@ -323,7 +321,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md"><p class="caption">These two plays are great
+        <div class="col-md"><p class="caption">These two batted balls are great
           performances by the batters, but they get unlucky when the
           defenders make spectacular plays they can't control.</p></div>
       </div>
@@ -348,7 +346,7 @@
       </div>
       <div class="row">
         <div class="col-md"><p class="caption">A spray chart of balls hit at 101
-          MPH with a launch angle of &deg 34, showing that for this trajectory
+          MPH with a launch angle of 34&deg, showing that for this trajectory
           half of batted balls are outs and of the other half, most are home
           runs. We can use this data to calculate the expected value of a hit of
           this type from FanGraphs Guts.</p></div>
