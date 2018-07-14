@@ -574,14 +574,10 @@
 
     <p>
     Lastly, let's consider some of the factors still not accounted for in xwOBA.
-    The two most significant ones are baserunning and park factors. Once players
-    make contact with the ball, they run the bases as fast as possible to reach
-    base before being tagged out. However, this is not actually tied to
-    performance at the plate, but rather offensive performance as a whole. Since
-    we are trying to measure performance at the plate, we can ignore it. Park
-    factors describe the differences in baseball stadiums, since baseball is
-    very unique since the physical shape and distance out the outfield varies
-    from park to park.
+    The two most significant ones are baserunning and park factors. Park factors
+    are caused by the differences between baseball stadiums, since baseball is a
+    very unique sport in that it allows the physical shape and distance of the
+    outfield to vary from park to park.
     </p>
 
     <div class="container-fluid center">
@@ -601,6 +597,17 @@
         relatively distant outfield wall.</p></div>
       </div>
     </div>
+
+    <p>
+    While this is something we would need to adjust for if we were using a
+    metric other than xwOBA, it actually doesn't matter here! This is because we
+    measure only the exit velocity and launch angle of batted balls, and not
+    the calls on the field. For instance, a 300-foot hit that falls for a home
+    run in Coors Field but is caught for an out in Citi Field counts the same
+    in either case in our measure of xwOBA, in the same way that defensive
+    considerations were stripped out. Thats means that we have effectively
+    limited the drawbacks of the measure to luck.
+    </p>
 
     <p>
     In math-heavy article, each batting stat as a dot product of two vectors,
