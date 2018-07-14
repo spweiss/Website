@@ -476,8 +476,33 @@
       w_4 \cdot HR_x + w_5 \cdot uBB + w_6 \cdot HBP}{AB+uBB+HBP+SF}$$</p>
 
     <p>
-    Now that we have arrived at this point
+    Now that we have arrived at this point, it will be instructive to example
+    some real-world data to see whether the theory of expected performance based
+    on quality of contact holds up.
     </p>
+
+    <div class="container-fluid center">
+      <div class="row imagetiles">
+        <div class="col-md-4">
+          <img src="/images/xw2015.png" alt="Loading" title="xw2015" class="img-fluid imgbox-tight">
+        </div>
+        <div class="col-md-4">
+          <img src="/images/xw2016.png" alt="Loading" title="xw2016" class="img-fluid imgbox-tight">
+        </div>
+        <div class="col-md-4">
+          <img src="/images/xw2017.png" alt="Loading" title="xw2017" class="img-fluid imgbox-tight">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md"><p class="caption">Comparisons of the wOBA and xWOBA
+          amongst qualified players (those with at least 502 at-bats, a large
+          enough sample size to be meaningful) in each of the years Statcast has
+          collected data uniformly throughout the league. The relationships
+          between the two metrics have R<sup>2</sup> values of 0.72, 0.65, and
+          0.69, respectively. Statcast data sourced from Baseball Savant and
+          analysed by me.</p></div>
+      </div>
+    </div>
 
     <p>
     In math-heavy article, each batting stat as a dot product of two vectors,
@@ -489,7 +514,7 @@
     where they are replaced by expected values via Hit Probability as a function
     of Exit Velocity and Launch Angle from Statcast. Hit Probability compares
     the EV and LA of a hit against all other hits of the same time since the
-    introduction of Statcast in 2015 (how many batted balls since them?) and
+    introduction of Statcast in 2015 (how many batted balls since then?) and
     determines the likelihood that a batted ball will be a single, double, etc.
     This transitions the performance vector from field outcome to quality of
     contact, meaning that it is more tightly linked to hitter performance at the
