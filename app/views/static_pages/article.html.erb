@@ -476,9 +476,12 @@
       w_4 \cdot HR_x + w_5 \cdot uBB + w_6 \cdot HBP}{AB+uBB+HBP+SF}$$</p>
 
     <p>
-    Now that we have arrived at this point, it will be instructive to example
+    Now that we have arrived at this point, it will be instructive to examine
     some real-world data to see whether the theory of expected performance based
-    on quality of contact holds up.
+    on quality of contact holds up. First, let's simply test whether a player's
+    wOBA and xwOBA are similar during the year, as a sanity check. We can see
+    from the plots below that the relationship is quite linear, lending credence
+    to the theory so far.
     </p>
 
     <div class="container-fluid center">
@@ -500,7 +503,72 @@
           collected data uniformly throughout the league. The relationships
           between the two metrics have R<sup>2</sup> values of 0.72, 0.65, and
           0.69, respectively. Statcast data sourced from Baseball Savant and
-          analysed by me.</p></div>
+          analysed by me in R.</p></div>
+      </div>
+    </div>
+
+    <p>
+    In addition to our goal of understanding the performance of players, it
+    would be useful to see whether or not xwOBA is more reliable measure of
+    future performance than wOBA. To determine whether this is true, we can test
+    how tightly linked the performance of a player in one year is with that of
+    the following year. Conceptually, this means that if in fact quality of
+    contact is a better measure of talent level, then it should predict future
+    performance better than past performance predcits future perforance. (A note
+    for the statistically-minded: xwOBA is intended to be descriptive not
+    predictive, but we are forced to make this slight transgression in absence
+    of data outside of the three-year Statcast era. Predictive measures like
+    PECOTA use player comparables.) To test this, we plot players' wOBA and
+    xwOBA in one year against their wOBA in the following year. Since we are now
+    limited to players who are qualified hitters (recall that this means they
+    have had many at-bats) in all three years, so the sample size is now around
+    300, down from around 450 previously. We would expect the relationship to be
+    less linear, since we are now making comparisons between years, but we do
+    see that xwOBA in in fact a better predictor of future performance! The
+    R<sup>2</sup> values of the plots using wOBA as a predictor are both 0.16
+    and the R<sup>2</sup> values of the plots using xwOBA as a predictor are
+    both 0.19.
+    </p>
+
+    <div class="container-fluid center">
+      <div class="row imagetiles">
+        <div class="col-md-6">
+          <img src="/images/wpredict2016.png" alt="Loading" title="wpredict2016" class="img-fluid imgbox">
+        </div>
+        <div class="col-md-6">
+          <img src="/images/wpredict2017.png" alt="Loading" title="wpredict2017" class="img-fluid imgbox">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md"><p class="caption">Comparisons of players' wOBA in
+          one year with their wOBA in the following year amongst players
+          qualified in both years (those with at least 502 at-bats, a large
+          enough sample size to be meaningful) in each of the years Statcast has
+          collected data uniformly throughout the league. The relationships
+          between the two metrics have R<sup>2</sup> values of 0.16 and 0.16,
+          respectively. Statcast data sourced from Baseball Savant and analysed
+          by me in R.</p></div>
+      </div>
+    </div>
+
+    <div class="container-fluid center">
+      <div class="row imagetiles">
+        <div class="col-md-6">
+          <img src="/images/xpredict2016.png" alt="Loading" title="xpredict2016" class="img-fluid imgbox">
+        </div>
+        <div class="col-md-6">
+          <img src="/images/xpredict2017.png" alt="Loading" title="xpredict2017" class="img-fluid imgbox">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md"><p class="caption">Comparisons of players' xwOBA in
+          one year with their wOBA in the following year amongst players
+          qualified in both years (those with at least 502 at-bats, a large
+          enough sample size to be meaningful) in each of the years Statcast has
+          collected data uniformly throughout the league. The relationships
+          between the two metrics have R<sup>2</sup> values of 0.19 and 0.19,
+          respectively. Statcast data sourced from Baseball Savant and analysed
+          by me in R.</p></div>
       </div>
     </div>
 
