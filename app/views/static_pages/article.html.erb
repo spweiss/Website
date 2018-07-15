@@ -11,7 +11,8 @@
 
     <h1>Alphabet Soup</h1>
 
-    <h2>Sabermetrics of some sort</h2>
+    <h2>Determining Whether xwOBA and Statcast Quality of Contact Data can Be
+      Used to Improve on wOBA and Plays Called on the Field</h2>
 
     <p>Whitespace?</p>
 
@@ -657,56 +658,22 @@
     </p>
 
     <p>
-    In math-heavy article, each batting stat as a dot product of two vectors,
-    where the first is a performance vector with the numbers of each event that
-    occur for a player, and the second is a weights vector with the
-    ceoffiecients on each. For instance, the weights on BA are [1,1,1,1,...],
-    slugging are [1,2,3,4], wOBA are [Fangraphs Guts], etc. The weights on the
-    performance vector are the offical score of the game for all except xwOBA,
-    where they are replaced by expected values via Hit Probability as a function
-    of Exit Velocity and Launch Angle from Statcast. Hit Probability compares
-    the EV and LA of a hit against all other hits of the same time since the
-    introduction of Statcast in 2015 (how many batted balls since then?) and
-    determines the likelihood that a batted ball will be a single, double, etc.
-    This transitions the performance vector from field outcome to quality of
-    contact, meaning that it is more tightly linked to hitter performance at the
-    plate.
-    </p>
-
-    <p>$$2+\frac{1}{x}$$</p>
-
-    <p>$$\Gamma (x) = \int^\infty_0 dx$$</p>
-
-    <p>
-    Compare against BABIP
-    </p>
-
-    <p>
-    Factors still not accounted for: baserunning, park factors, and (the
-    remaining) luck, but these are likely small.
-    </p>
-
-    <p>
     Credit Tom Tango for creating wOBA in The Book and Baseball Savant for
     calculating xwOBA
     </p>
 
-    <p>
-    Include plots showing how accurate each of the metrics are
-    </p>
-
-    <p>
-    Hit probability article (good examples, videos): https://www.mlb.com/news/statcast-introduces-hit-probability-for-2017/c-217705412
-    Hit probability defintion: http://m.mlb.com/glossary/statcast/hit-probability
-    xwOBA definition: http://m.mlb.com/glossary/statcast/expected-woba
-    xwOBA background: https://www.fangraphs.com/blogs/how-i-use-xwoba/
-    wOBA and xwOBA: https://www.fangraphs.com/blogs/what-can-statcast-tell-us-this-early-in-the-season/
-    Baserunning and xwOBA-wOBA: https://www.fangraphs.com/blogs/how-to-beat-statcasts-hitting-metric/
-    Guts for every season back to 1871: https://www.fangraphs.com/guts.aspx?type=cn
-    FiveThirtyEight EV/LA Hit Probability Plot: https://fivethirtyeight.com/features/the-new-science-of-hitting/
-    Linear weights explanation: https://www.fangraphs.com/library/principles/linear-weights/
-    RE24 explanation: https://www.fangraphs.com/library/misc/re24/
-    </p>
+    <p><ul class="caption">
+    <li>Hit probability background: https://www.mlb.com/news/statcast-introduces-hit-probability-for-2017/c-217705412</li>
+    <li>Hit probability defintion: http://m.mlb.com/glossary/statcast/hit-probability</li>
+    <li>xwOBA definition: http://m.mlb.com/glossary/statcast/expected-woba</li>
+    <li>xwOBA background: https://www.fangraphs.com/blogs/how-i-use-xwoba/</li>
+    <li>wOBA and xwOBA: https://www.fangraphs.com/blogs/what-can-statcast-tell-us-this-early-in-the-season/</li>
+    <li>Baserunning and xwOBA-wOBA: https://www.fangraphs.com/blogs/how-to-beat-statcasts-hitting-metric/</li>
+    <li>Guts for every season since 1871: https://www.fangraphs.com/guts.aspx?type=cn</li>
+    <li>FiveThirtyEight EV/LA Hit Probability Plot: https://fivethirtyeight.com/features/the-new-science-of-hitting/</li>
+    <li>Linear weights explanation: https://www.fangraphs.com/library/principles/linear-weights/</li>
+    <li>RE24 explanation: https://www.fangraphs.com/library/misc/re24/</li>
+    </ul></p>
 
     <script>renderMathInElement(document.body);</script>
 
