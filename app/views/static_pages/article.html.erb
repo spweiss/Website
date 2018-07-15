@@ -621,12 +621,19 @@
     lack of input from baserunning into our metric is actually a good thing. If
     we were instead trying to measure offensive performance as a whole, we could
     add it back in. Thats suggests that in our exploration of xwOBA we have
-    effectively limited any unconsidered factors in the metric but luck!
+    effectively limited any potential confounding factors in the metric but
+    luck!
     </p>
 
     <p>
     To test this conjecture, let's determine the extent to which we can chalk
     the difference in a player's wOBA and xWOBA up to baserunning ability.
+    Deviations between a players's wOBA and xwOBA are due to some combination of
+    defense, baserunning, and luck, so if we plot a player's baserunning ability
+    againt the differnce between their xwOBA and wOBA, we should expect to see
+    that higher baserunning value causes players to "beat" their xwOBA. This
+    means that they would use their speed to cause a batted ball that may have
+    gone for a double for others into a triple for them.
     </p>
 
     <div class="container-fluid center">
@@ -636,9 +643,18 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md"><p class="caption">------------CAPTION-------------</p></div>
+        <div class="col-md"><p class="caption">Comparison of players'
+          baserunning value via BsR with the amount that their xwOBA exceeded
+          wOBA. The relationship has an R<sup>2</sup> value of 0.27.</p></div>
       </div>
     </div>
+
+    <p>
+    The relationship indicates that baserunning is indeed a factor
+    differentiating xwOBA from wOBA, and since the R<sup>2</sup> value was 0.27,
+    we can reasonably say that the remainder of the difference is likely due to
+    some combination of defense and luck.
+    </p>
 
     <p>
     In math-heavy article, each batting stat as a dot product of two vectors,
