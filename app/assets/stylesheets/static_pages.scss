@@ -94,12 +94,21 @@ img {
   transition: 0.3s all;
 }
 
+.startTan {
+  background: tan;
+  transition: 0.3s all;
+}
+
 .changeColorWhite {
   background: white;
 }
 
 .changeColorTan {
   background: tan;
+}
+
+.changeColorGrey {
+  background: lightgrey;
 }
 
 .center {
@@ -122,8 +131,6 @@ img {
 .content {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   padding-top: 5%;
-  //padding-left: 20%;
-  //padding-right: 20%;
 }
 
 .jumbotron {

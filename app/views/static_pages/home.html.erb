@@ -17,6 +17,12 @@
           if ($(this).scrollTop() < $(".page").height() * 1.70) {
              $("div").removeClass("changeColorTan")
           }
+          if ($(this).scrollTop() > $(".page").height() * 2.70) {
+             $("div").addClass("changeColorGrey")
+          }
+          if ($(this).scrollTop() < $(".page").height() * 2.70) {
+             $("div").removeClass("changeColorGrey")
+          }
        });
     });
     </script>
@@ -62,15 +68,6 @@
       </div>
     </div>
 
-    <!--<div class="page startWhite">
-      <div class="jumbotron container background-grey shadow">
-        <h1 class="display-4">Spencer Weiss</h1>
-        <p class="lead">My favorite map projection is the Wasserman Butterfly</p>
-        <p>Check out some fun statistics here</p>
-        <p class="text-center"><a class="btn btn-primary btn-lg" href="render">Learn more</a><p>
-      </div>
-    </div>-->
-
     <div class="page startWhite">
       <div class="container-fluid left">
         <div class="row">
@@ -85,6 +82,25 @@
           <div class="col-sm-4 left"></div>
           <div class="col-sm-1 vert-center-lg">
             <a href="render"><img src="/images/right-arrow.png" alt="Loading" title="arrow" class="img-fluid imgbox-tight"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page startTan">
+      <div class="container-fluid left">
+        <div class="row">
+          <div class="col-sm-1 left"></div>
+          <div class="col-sm-6 left">
+            <div class="row vert-center-md-1">
+              <h1>Cancer Immunotherapy</h1>
+              <p>Plac1 Is a Key Regulator of the Inflammatory Response and
+                Immune Tolerance In Mammary Tumorigenesis</p>
+            </div>
+          </div>
+          <div class="col-sm-4 left"></div>
+          <div class="col-sm-1 vert-center-lg">
+            <a href="nature.pdf" download><img src="/images/right-arrow.png" alt="Loading" title="arrow" class="img-fluid imgbox-tight"></a>
           </div>
         </div>
       </div>
