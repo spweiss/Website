@@ -22,8 +22,6 @@ nav {
 b {
   padding-top: 20vh;
   position: absolute;
-  background: black;
-  transition: 0.3s all;
 }
 
 h1 {
@@ -57,6 +55,11 @@ img {
 
 .imgbox-tight {
   max-width: 20vw;
+}
+
+.startColor {
+  background: black;
+  transition: 0.3s all;
 }
 
 .changeColor {
