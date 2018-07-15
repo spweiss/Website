@@ -9,712 +9,724 @@
 
   <body class="content">
 
-    <h1>Quality of Contact</h1>
-
-    <h2>Determining Whether xwOBA and Statcast EV/LA Data Can Be Used to
-      Determine Plate Performance Better than Plays Called on the Field</h2>
-
-    <p><br><br></p>
-
-    <p>
-    The goal of this paper is to examine whether a new source of data rolled out
-    by Major League Baseball in 2015 can allow us to measure the performance
-    of players better than that performance can measure itself. Before we delve
-    into any weighty concepts, however, let's cover some background on baseball
-    and statistics that will be instructive for later sections. Even if you
-    recognize some of the terms used early on, I encourage you to read through
-    the explanations to pick up the frameworks that will be needed to understand
-    the crux of the paper. If you do happen to be a Sabermetrics expert, though,
-    feel free to skip to the latter sections.
-    </p>
-
-    <h3>Background</h3>
-
-    <p>
-    Batting average is a popularly recognized and understood measure of
-    hitter performance, at least in part because it's concise and easy to
-    remember. It is simply hits per at-bat, or the likelihood that a particular
-    at-bat for a given player will result in a hit.
-    </p>
-
-    <p>
-    $$BA = \frac{H}{AB}$$
-    </p>
-
-    <p>
-    Since hits are the sum of singles, doubles, triples, and home runs, let's
-    now express batting average in terms of those quantities.
-    </p>
-
-    <p>
-    $$BA = \frac{1B+2B+3B+HR}{AB}$$
-    </p>
-
-    <hr class="my-4">
-    <p class="center">
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseBaseball" aria-expanded="false" aria-controls="collapseBaseball" class="btn float-right">
-        Triples? At-bats?
-      </button>
-    </p>
-    <div class="collapse" id="collapseBaseball">
-      <p class="card card-body">
-        When a batter makees contact with the ball and advances around the bases
-        without getting out, the result of the play is assigned to be the number
-        of bases gained. Home runs occur when the batter reaches home plate and
-        scores in the play. An at-bat is when a batter has a turn at the plate
-        and either gets a hit or an out after making contact (which excludes
-        things like walks, hit-by-pitch events, sacrifice hits or bunts,
-        interference, and substitutions).
-      </p>
-    </div>
-    <hr class="my-4">
-
-    <p>
-    If you have a modicum of familiarity with baseball, it may now be clear to
-    you that batting average has some glaring ommisions. First, there are other
-    ways to reach base than by getting a hit, and second, a player should not be
-    credited the same amount for a single and a home run.
-    </p>
-
-    <div class="container-fluid center">
-      <div class="row imagetiles">
-        <div class="col-md-6">
-          <img src="/images/single.gif" alt="Loading" title="Single" class="img-fluid imgbox">
-        </div>
-        <div class="col-md-6">
-          <img src="/images/hr.gif" alt="Loading" title="Home Run" class="img-fluid imgbox">
-        </div>
-      </div>
+    <div class="container-fluid left">
       <div class="row">
-        <div class="col-md"><p class="caption">These two Bryce Harper plays
-          don't make it look like hustle singles and moonshot home runs deserve
-          the same statistical treatment.</p></div>
-      </div>
-    </div>
+        <div class="col-sm-2 left"></div>
+        <div class="col-sm-8 left">
 
-    <p>
-    Before we begin to address some of these issues, let's again re-express
-    batting average in a way that will help us later on. Rather than hits, we
-    can write the numerator as the dot product of a performance vector and a
-    weights vector.
-    </p>
+          <h1>Quality of Contact</h1>
 
-    <p>$$\vec{~p} ~\cdot \vec{~w}$$</p>
+          <h2>Determining Whether xwOBA and Statcast EV/LA Data Can Be Used to
+            Determine Plate Performance Better than Plays Called on the Field</h2>
 
-    <hr class="my-4">
-    <p class="center">
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseVectors" aria-expanded="false" aria-controls="collapseVectors" class="btn float-right">
-        Dot product? Remind me!
-      </button>
-    </p>
-    <div class="collapse" id="collapseVectors">
-      <p class="card card-body">
-        A dot product is a mathematical operation that causes corresponding
-        elements in two vectors to be multiplied together, and each of these
-        products summed, resulting in a scalar. $$\vec{~a} ~\cdot \vec{~b} =
-        \begin{bmatrix} a_1\\ a_2\\ a_3 \end{bmatrix} \cdot \begin{bmatrix}
-        b_1\\ b_2\\ b_3 \end{bmatrix} = a_1 \cdot b_1 + a_2 \cdot b_2 + a_3
-        \cdot b_3$$ It can only be applied to vectors with the same structure,
-        that is those with matching numbers of rows and columns.
-      </p>
-    </div>
-    <hr class="my-4">
+          <p><br><br></p>
 
-    <p>
-    We will continue to use this formulation throughout this study, though the
-    defintions of the vectors will change. In the case of batting average, the
-    performance vector for a player has elements for the number of singles,
-    doubles, triples, and home runs, and the weights vector is composed of all
-    ones.
-    </p>
+          <p>
+          The goal of this paper is to examine whether a new source of data rolled out
+          by Major League Baseball in 2015 can allow us to measure the performance
+          of players better than that performance can measure itself. Before we delve
+          into any weighty concepts, however, let's cover some background on baseball
+          and statistics that will be instructive for later sections. Even if you
+          recognize some of the terms used early on, I encourage you to read through
+          the explanations to pick up the frameworks that will be needed to understand
+          the crux of the paper. If you do happen to be a Sabermetrics expert, though,
+          feel free to skip to the latter sections.
+          </p>
 
-    <p>$$\vec{p}_{BA} \cdot \vec{w}_{BA} = \begin{bmatrix} 1B\\
-      2B\\ 3B\\ HR \end{bmatrix} \cdot \begin{bmatrix} 1\\ 1\\ 1\\ 1
-      \end{bmatrix}$$</p>
-    <p>$$BA = \frac{\vec{p}_{BA} \cdot \vec{w}_{BA}}{AB} =
-      \frac{1 \cdot 1B + 1 \cdot 2B + 1 \cdot 3B + 1 \cdot HR }{AB} =
-      \frac{1B+2B+3B+HR}{AB}$$</p>
+          <h3>Background</h3>
 
-    <p>
-    To address the most glaring issues noted above, let's now consider some
-    other existing statistics you may have heard of. First, on-base percentage
-    (OBP), which is a metric of the frequency that a player reaches base. In
-    order to do that, we will change the definition of the performance vector to
-    include walks (BB) and hit-by-pitch events (HBP), each also weighted as one.
-    In addition, since there are more events that a player can use to reach base
-    according to OBP, we have to make some changes to the denominator. We will
-    set this to at-bats plus walks plus hit-by-pitch events plus sacrifice flies
-    (another way to get out) to capture all possible events in this model.
-    </p>
+          <p>
+          Batting average is a popularly recognized and understood measure of
+          hitter performance, at least in part because it's concise and easy to
+          remember. It is simply hits per at-bat, or the likelihood that a particular
+          at-bat for a given player will result in a hit.
+          </p>
 
-    <p>$$\vec{p}_{OBP} \cdot \vec{w}_{OBP} = \begin{bmatrix} 1B\\
-      2B\\ 3B\\ HR\\ BB\\ HBP \end{bmatrix} \cdot \begin{bmatrix} 1\\ 1\\ 1\\
-      1\\ 1\\ 1 \end{bmatrix}$$</p>
-    <p>$$OBP = \frac{\vec{p}_{OBP} \cdot \vec{w}_{OBP}}{AB+BB+HBP+SF} =
-      \frac{1B+2B+3B+HR+BB+HBP}{AB+BB+HBP+SF}$$</p>
+          <p>
+          $$BA = \frac{H}{AB}$$
+          </p>
 
-    <p>
-    This does a better job of capturing the ways that hitters can contribute
-    outside of hits, but still does not consider the relative values of each
-    event. Starting again from batting average, we now consider another existing
-    metric you may have heard of. Slugging percentage (SLG) is a measure of a
-    player's power, assigning more weight to more bases generated. In this case,
-    the weight for an event is equal to the number of bases generated, so that a
-    double has weight 2 and a home run has weight 4. Thus, the only change we
-    make to batting average to find slugging percentage is to change the
-    elements of the weights vector to 1, 2, 3, and 4.
-    </p>
+          <p>
+          Since hits are the sum of singles, doubles, triples, and home runs, let's
+          now express batting average in terms of those quantities.
+          </p>
 
-    <p>$$\vec{p}_{SLG} \cdot \vec{w}_{SLG} = \begin{bmatrix} 1B\\
-      2B\\ 3B\\ HR \end{bmatrix} \cdot \begin{bmatrix} 1\\ 2\\ 3\\ 4
-      \end{bmatrix}$$</p>
-    <p>$$SLG = \frac{\vec{p}_{SLG} \cdot \vec{w}_{SLG}}{AB} =
-      \frac{1 \cdot 1B + 2 \cdot 2B + 3 \cdot 3B + 4 \cdot HR}{AB}$$</p>
+          <p>
+          $$BA = \frac{1B+2B+3B+HR}{AB}$$
+          </p>
 
-    <p>
-    The numerator of the above expression is sometimes called total bases (TB),
-    since the dot product of the two vectors results in the sum of the bases a
-    player would gain on the hits made.
-    </p>
+          <hr class="my-4">
+          <p class="center">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseBaseball" aria-expanded="false" aria-controls="collapseBaseball" class="btn float-right">
+              Triples? At-bats?
+            </button>
+          </p>
+          <div class="collapse" id="collapseBaseball">
+            <p class="card card-body">
+              When a batter makees contact with the ball and advances around the bases
+              without getting out, the result of the play is assigned to be the number
+              of bases gained. Home runs occur when the batter reaches home plate and
+              scores in the play. An at-bat is when a batter has a turn at the plate
+              and either gets a hit or an out after making contact (which excludes
+              things like walks, hit-by-pitch events, sacrifice hits or bunts,
+              interference, and substitutions).
+            </p>
+          </div>
+          <hr class="my-4">
 
-    <p>$$SLG = \frac{\vec{p}_{SLG} \cdot \vec{w}_{SLG}}{AB} =
-      \frac{TB}{AB}$$</p>
+          <p>
+          If you have a modicum of familiarity with baseball, it may now be clear to
+          you that batting average has some glaring ommisions. First, there are other
+          ways to reach base than by getting a hit, and second, a player should not be
+          credited the same amount for a single and a home run.
+          </p>
 
-    <p>
-    Now we have addressed each of the above problems separately by accounting
-    for non-hit production in OBP and by weighting different outcomes
-    differently in SLG, but neither is able to fix both problems simultaneously.
-    One common solution is to simply add the two statistics together. This
-    results in a metric aptly named on-base plus slugging (OPS) which has been
-    increasing in popularity among non-sabermetricians in recent years.
-    </p>
-
-    <p>$$OPS=OBP+SLG=\frac{H+BB+HBP}{AB+BB+HBP+SF}+\frac{TB}{AB}$$</p>
-
-    <h3>Advanced Metrics</h3>
-
-    <p>
-    OPS does a much better job at encapsulating hitter performance than the
-    metrics we have seen so far, but as you can see above, the formula is a bit
-    of a mess. More importantly though, there is not much conceptual motivation
-    for adding OBP and SLG together besides the fact that it seems like it might
-    help. The easiest way to see this is that the deonominators of the fractions
-    are different. Also, the notion of performance and weight vectors breaks
-    down (the statistics are in different vector spaces). Since it is crudely
-    amalgamating performance over two different reference frames, OPS doesn't
-    have any conceptual meaning. In addition, there is a sneakier reason why
-    slugging percentage (and by extension, OPS) is suboptimal. While it is true
-    that we shouldn't consider singles and triples the same and we can be
-    reasonably confident that triples are worth more than singles, there is no
-    reason we can assume that triples should be weighted exactly three times as
-    much as singles. We will have to make some slightly more subtle adjustments
-    to improve from here, but there is still much more ground to gain.
-    </p>
-
-    <p>
-    As a starting point, we know that we would like to include more outcomes
-    than just hits, so let's establish a vector space similar to the one in OBP,
-    with singles, doubles, triples, home runs, unintentional walks, and
-    hit-by-pitch events. The denominator, then, will include at-bats,
-    unintentional walks, hit-by-pitch events, and secrifice flys.
-    </p>
-
-    <p>
-    This brings us to the weights vector. If the values corresponding to each of
-    the possible events are not the same and are not simply equal to the number
-    of bases gained, then we will have to come up with another method to weight
-    them. A prominent method was theorized in 2007 by Tom Tango, Mitchel
-    Lichtman, and Pete Palmer in <i>The Book: Playing the Percentages in
-    Baseball</i> (known simply as <i>The Book</i> to sabermetricians due to its
-    inheritance from Bill James' seminal work in the <i>Baseball Abstract</i>
-    two decades earlier). According to this method, we can assign values to each
-    event at the plate based on their tendency to generate runs in excess of the
-    average play. The weight for each type of hit is derived from the change in
-    Run Expectancy before and after the event for every possible base-out state
-    (all arrangements of players on the bases with zero, one and two outs). For
-    instance, a team would have a higher run expectancy after a single than
-    before it, but it would have had an even higher run expectancy if that
-    single had been a double instead. Based on these changes in Run Expectancy,
-    we can determine the relative values of each event. These are called linear
-    weights, and we can use them in place of the previous values used in the
-    weights vector. There are different sets of linear weights for each season
-    to ensure that we adjust for the Run Environment, since overall batting
-    performance has changed significantly over the centuries of baseball and we
-    want to ensure that we have an appropriate reference frame. The set of
-    linear weights for each year since the 1871 season are compiled by
-    Fangraphs, and are thus sometimes referred to as Fangraphs Guts. It should
-    also be noted that these linear weights are assigned values such that the
-    resulting metric is on the same scale as on-base percentage, which is a
-    useful and pragmatic quality since it allows you to quickly understand what
-    performances can be considered "good" or "bad" if you are familiar with OBP.
-    (This is accomplished by setting the value of getting out to zero and
-    adjusting the others correspondingly.)
-    </p>
-
-    <hr class="my-4">
-    <p class="center">
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseRunExpectancy" aria-expanded="false" aria-controls="collapseRunExpectancy" class="btn float-right">
-        Run Expectancy? Base-out states? Break it down.
-      </button>
-    </p>
-    <div class="collapse" id="collapseRunExpectancy">
-      <p class="card card-body">
-        To find the value of hitting a double, we start with a Run Expectancy
-        Matrix called RE24. It has an entry for each possible base-out state,
-        such as the state where the bases are loaded with no outs. There are
-        eight possible arrangements of players on the bases and there can be
-        zero, one, or two outs, for a total of 24 possible states. For each
-        state, we look at all innings where that state has occurred in real life
-        and find the number of runs scored in each one after that state was
-        reached. Then, we divide by the number of innings in the sample to find
-        the expected number of runs scored from that state.
-      </p>
-
-        <div class="container-fluid center">
-          <div class="row imagetiles">
-            <div class="col-md-12">
-              <img src="/images/RE24.png" alt="Loading" title="RE24" class="img-fluid imgbox">
+          <div class="container-fluid center">
+            <div class="row imagetiles">
+              <div class="col-md-6">
+                <img src="/images/single.gif" alt="Loading" title="Single" class="img-fluid imgbox">
+              </div>
+              <div class="col-md-6">
+                <img src="/images/hr.gif" alt="Loading" title="Home Run" class="img-fluid imgbox">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md"><p class="caption">These two Bryce Harper plays
+                don't make it look like hustle singles and moonshot home runs deserve
+                the same statistical treatment.</p></div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md"><p class="caption">The RE24 matrix based on the
-              2010-2015 seasons, from FanGraphs and Tom Tango.</p></div>
+
+          <p>
+          Before we begin to address some of these issues, let's again re-express
+          batting average in a way that will help us later on. Rather than hits, we
+          can write the numerator as the dot product of a performance vector and a
+          weights vector.
+          </p>
+
+          <p>$$\vec{~p} ~\cdot \vec{~w}$$</p>
+
+          <hr class="my-4">
+          <p class="center">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseVectors" aria-expanded="false" aria-controls="collapseVectors" class="btn float-right">
+              Dot product? Remind me!
+            </button>
+          </p>
+          <div class="collapse" id="collapseVectors">
+            <p class="card card-body">
+              A dot product is a mathematical operation that causes corresponding
+              elements in two vectors to be multiplied together, and each of these
+              products summed, resulting in a scalar. $$\vec{~a} ~\cdot \vec{~b} =
+              \begin{bmatrix} a_1\\ a_2\\ a_3 \end{bmatrix} \cdot \begin{bmatrix}
+              b_1\\ b_2\\ b_3 \end{bmatrix} = a_1 \cdot b_1 + a_2 \cdot b_2 + a_3
+              \cdot b_3$$ It can only be applied to vectors with the same structure,
+              that is those with matching numbers of rows and columns.
+            </p>
           </div>
-        </div>
+          <hr class="my-4">
 
-      <p class="card card-body">
-        Now, returning to the calculation of the value
-        of a double, we consider the change in Run Expectancy before and after
-        the hit. Suppose the bases were empty and there were no outs before the
-        double. That means that after the double, there no outs and a player on
-        second. We take subtract the Run Expectancies before and after to find
-        the value added from that play. In another case where a double is hit
-        when there was already a player on third, that player would score, so we
-        would add one to the Run Expectancy of the new state. However, we want
-        to stay context-neutral, meaning that when we measure player
-        performance, we don't care how many players were on base or how many
-        outs there were. Because of this, to calculate the value of a double in
-        general, we take into account the likelihood that the field could have
-        been in any of the possible states, based on how often each one occurs.
-        This gives us the value of a double in terms of its proclivity to
-        produce runs. The values of the other batting events can be calculated
-        in the same way.
-      </p>
+          <p>
+          We will continue to use this formulation throughout this study, though the
+          defintions of the vectors will change. In the case of batting average, the
+          performance vector for a player has elements for the number of singles,
+          doubles, triples, and home runs, and the weights vector is composed of all
+          ones.
+          </p>
+
+          <p>$$\vec{p}_{BA} \cdot \vec{w}_{BA} = \begin{bmatrix} 1B\\
+            2B\\ 3B\\ HR \end{bmatrix} \cdot \begin{bmatrix} 1\\ 1\\ 1\\ 1
+            \end{bmatrix}$$</p>
+          <p>$$BA = \frac{\vec{p}_{BA} \cdot \vec{w}_{BA}}{AB} =
+            \frac{1 \cdot 1B + 1 \cdot 2B + 1 \cdot 3B + 1 \cdot HR }{AB} =
+            \frac{1B+2B+3B+HR}{AB}$$</p>
+
+          <p>
+          To address the most glaring issues noted above, let's now consider some
+          other existing statistics you may have heard of. First, on-base percentage
+          (OBP), which is a metric of the frequency that a player reaches base. In
+          order to do that, we will change the definition of the performance vector to
+          include walks (BB) and hit-by-pitch events (HBP), each also weighted as one.
+          In addition, since there are more events that a player can use to reach base
+          according to OBP, we have to make some changes to the denominator. We will
+          set this to at-bats plus walks plus hit-by-pitch events plus sacrifice flies
+          (another way to get out) to capture all possible events in this model.
+          </p>
+
+          <p>$$\vec{p}_{OBP} \cdot \vec{w}_{OBP} = \begin{bmatrix} 1B\\
+            2B\\ 3B\\ HR\\ BB\\ HBP \end{bmatrix} \cdot \begin{bmatrix} 1\\ 1\\ 1\\
+            1\\ 1\\ 1 \end{bmatrix}$$</p>
+          <p>$$OBP = \frac{\vec{p}_{OBP} \cdot \vec{w}_{OBP}}{AB+BB+HBP+SF} =
+            \frac{1B+2B+3B+HR+BB+HBP}{AB+BB+HBP+SF}$$</p>
+
+          <p>
+          This does a better job of capturing the ways that hitters can contribute
+          outside of hits, but still does not consider the relative values of each
+          event. Starting again from batting average, we now consider another existing
+          metric you may have heard of. Slugging percentage (SLG) is a measure of a
+          player's power, assigning more weight to more bases generated. In this case,
+          the weight for an event is equal to the number of bases generated, so that a
+          double has weight 2 and a home run has weight 4. Thus, the only change we
+          make to batting average to find slugging percentage is to change the
+          elements of the weights vector to 1, 2, 3, and 4.
+          </p>
+
+          <p>$$\vec{p}_{SLG} \cdot \vec{w}_{SLG} = \begin{bmatrix} 1B\\
+            2B\\ 3B\\ HR \end{bmatrix} \cdot \begin{bmatrix} 1\\ 2\\ 3\\ 4
+            \end{bmatrix}$$</p>
+          <p>$$SLG = \frac{\vec{p}_{SLG} \cdot \vec{w}_{SLG}}{AB} =
+            \frac{1 \cdot 1B + 2 \cdot 2B + 3 \cdot 3B + 4 \cdot HR}{AB}$$</p>
+
+          <p>
+          The numerator of the above expression is sometimes called total bases (TB),
+          since the dot product of the two vectors results in the sum of the bases a
+          player would gain on the hits made.
+          </p>
+
+          <p>$$SLG = \frac{\vec{p}_{SLG} \cdot \vec{w}_{SLG}}{AB} =
+            \frac{TB}{AB}$$</p>
+
+          <p>
+          Now we have addressed each of the above problems separately by accounting
+          for non-hit production in OBP and by weighting different outcomes
+          differently in SLG, but neither is able to fix both problems simultaneously.
+          One common solution is to simply add the two statistics together. This
+          results in a metric aptly named on-base plus slugging (OPS) which has been
+          increasing in popularity among non-sabermetricians in recent years.
+          </p>
+
+          <p>$$OPS=OBP+SLG=\frac{H+BB+HBP}{AB+BB+HBP+SF}+\frac{TB}{AB}$$</p>
+
+          <h3>Advanced Metrics</h3>
+
+          <p>
+          OPS does a much better job at encapsulating hitter performance than the
+          metrics we have seen so far, but as you can see above, the formula is a bit
+          of a mess. More importantly though, there is not much conceptual motivation
+          for adding OBP and SLG together besides the fact that it seems like it might
+          help. The easiest way to see this is that the deonominators of the fractions
+          are different. Also, the notion of performance and weight vectors breaks
+          down (the statistics are in different vector spaces). Since it is crudely
+          amalgamating performance over two different reference frames, OPS doesn't
+          have any conceptual meaning. In addition, there is a sneakier reason why
+          slugging percentage (and by extension, OPS) is suboptimal. While it is true
+          that we shouldn't consider singles and triples the same and we can be
+          reasonably confident that triples are worth more than singles, there is no
+          reason we can assume that triples should be weighted exactly three times as
+          much as singles. We will have to make some slightly more subtle adjustments
+          to improve from here, but there is still much more ground to gain.
+          </p>
+
+          <p>
+          As a starting point, we know that we would like to include more outcomes
+          than just hits, so let's establish a vector space similar to the one in OBP,
+          with singles, doubles, triples, home runs, unintentional walks, and
+          hit-by-pitch events. The denominator, then, will include at-bats,
+          unintentional walks, hit-by-pitch events, and secrifice flys.
+          </p>
+
+          <p>
+          This brings us to the weights vector. If the values corresponding to each of
+          the possible events are not the same and are not simply equal to the number
+          of bases gained, then we will have to come up with another method to weight
+          them. A prominent method was theorized in 2007 by Tom Tango, Mitchel
+          Lichtman, and Pete Palmer in <i>The Book: Playing the Percentages in
+          Baseball</i> (known simply as <i>The Book</i> to sabermetricians due to its
+          inheritance from Bill James' seminal work in the <i>Baseball Abstract</i>
+          two decades earlier). According to this method, we can assign values to each
+          event at the plate based on their tendency to generate runs in excess of the
+          average play. The weight for each type of hit is derived from the change in
+          Run Expectancy before and after the event for every possible base-out state
+          (all arrangements of players on the bases with zero, one and two outs). For
+          instance, a team would have a higher run expectancy after a single than
+          before it, but it would have had an even higher run expectancy if that
+          single had been a double instead. Based on these changes in Run Expectancy,
+          we can determine the relative values of each event. These are called linear
+          weights, and we can use them in place of the previous values used in the
+          weights vector. There are different sets of linear weights for each season
+          to ensure that we adjust for the Run Environment, since overall batting
+          performance has changed significantly over the centuries of baseball and we
+          want to ensure that we have an appropriate reference frame. The set of
+          linear weights for each year since the 1871 season are compiled by
+          Fangraphs, and are thus sometimes referred to as Fangraphs Guts. It should
+          also be noted that these linear weights are assigned values such that the
+          resulting metric is on the same scale as on-base percentage, which is a
+          useful and pragmatic quality since it allows you to quickly understand what
+          performances can be considered "good" or "bad" if you are familiar with OBP.
+          (This is accomplished by setting the value of getting out to zero and
+          adjusting the others correspondingly.)
+          </p>
+
+          <hr class="my-4">
+          <p class="center">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseRunExpectancy" aria-expanded="false" aria-controls="collapseRunExpectancy" class="btn float-right">
+              Run Expectancy? Base-out states? Break it down.
+            </button>
+          </p>
+          <div class="collapse" id="collapseRunExpectancy">
+            <p class="card card-body">
+              To find the value of hitting a double, we start with a Run Expectancy
+              Matrix called RE24. It has an entry for each possible base-out state,
+              such as the state where the bases are loaded with no outs. There are
+              eight possible arrangements of players on the bases and there can be
+              zero, one, or two outs, for a total of 24 possible states. For each
+              state, we look at all innings where that state has occurred in real life
+              and find the number of runs scored in each one after that state was
+              reached. Then, we divide by the number of innings in the sample to find
+              the expected number of runs scored from that state.
+            </p>
+
+              <div class="container-fluid center">
+                <div class="row imagetiles">
+                  <div class="col-md-12">
+                    <img src="/images/RE24.png" alt="Loading" title="RE24" class="img-fluid imgbox">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md"><p class="caption">The RE24 matrix based on the
+                    2010-2015 seasons, from FanGraphs and Tom Tango.</p></div>
+                </div>
+              </div>
+
+            <p class="card card-body">
+              Now, returning to the calculation of the value
+              of a double, we consider the change in Run Expectancy before and after
+              the hit. Suppose the bases were empty and there were no outs before the
+              double. That means that after the double, there no outs and a player on
+              second. We take subtract the Run Expectancies before and after to find
+              the value added from that play. In another case where a double is hit
+              when there was already a player on third, that player would score, so we
+              would add one to the Run Expectancy of the new state. However, we want
+              to stay context-neutral, meaning that when we measure player
+              performance, we don't care how many players were on base or how many
+              outs there were. Because of this, to calculate the value of a double in
+              general, we take into account the likelihood that the field could have
+              been in any of the possible states, based on how often each one occurs.
+              This gives us the value of a double in terms of its proclivity to
+              produce runs. The values of the other batting events can be calculated
+              in the same way.
+            </p>
+          </div>
+          <hr class="my-4">
+
+          <p>
+          The metric resulting from the use of linear weights is called weighted
+          on-base average, or wOBA. It uses nearly the same performance vector as OBP
+          and uses the linear weight values from Fangraphs Guts as the weight vector.
+          </p>
+
+          <p>$$\vec{p}_{wOBA} \cdot \vec{w}_{wOBA} = \begin{bmatrix} 1B\\
+            2B\\ 3B\\ HR\\ uBB\\ HBP \end{bmatrix} \cdot \begin{bmatrix} w_1\\ w_2\\
+            w_3\\ w_4\\ w_5\\ w_6 \end{bmatrix}$$</p>
+          <p>$$wOBA = \frac{\vec{p}_{wOBA} \cdot \vec{w}_{wOBA}}
+            {AB+uBB+HBP+SF} =$$</p>
+          <p>$$\frac{w_1 \cdot 1B + w_2 \cdot 2B + w_3 \cdot 3B + w_4
+            \cdot HR + w_5 \cdot uBB + w_6 \cdot HBP}{AB+uBB+HBP+SF}$$</p>
+
+          <p>
+          While this may at first appear complex, it is really just the same model we
+          have been working with, only now the weights are a bit more abstract. To
+          give you a sense of what they might look like, the linear weights from the
+          2017 season are shown below.
+          </p>
+
+          <p>$$\vec{w}_{wOBA} = \begin{bmatrix} w_{1B}=0.887\\
+            w_{2B}=1.232\\ w_{3B}=1.552\\ w_{HR}=1.980\\ w_{uBB}=0.693\\ w_{HBP}=0.723
+            \end{bmatrix}$$</p>
+
+          <p>
+          These values are much closer together than we may have guessed, especially
+          considering that slugging percentage was weighting home runs four times as
+          much as singles! We can see that in reality, they are worth a bit more than
+          twice as much.
+          </p>
+
+          <p>
+          wOBA does a very good job at determining the average value that hitters
+          provide when they come to the plate (and for that reason it forms the basis
+          of metrics that aim to value total offensive contribution in terms of wins,
+          like WAR). However, there is another subtle conceptual question to address,
+          and in order to answer it we must delve into relatively uncharted
+          statistical waters and call into question the very way in which our data are
+          measured.
+          </p>
+
+          <p>
+          Thus far, and for the several centuries that baseball has been played and
+          its outcomes recorded, the results of plays are classified based on an
+          official game score. These are compiled in box scores, which have kept the
+          offical record of the results as called on the field since the 1800s. All of
+          the data feeding into the metrics we have considered thus far can be derived
+          from the same types of box scores. However, the introduction of Statcast by
+          the MLB in the 2006 postseason and the subsequent rollout to all stadiums in
+          the 2015 season has allowed us to collect far more granular data about
+          events on the field than simple hits and outs. Statcast simulates the
+          binocular vision of the eyes using two cameras which gather depth perception
+          data when combined with radar. This allows for the position and velocity of
+          the ball and all of the players on the field to be recorded at very high
+          fidelity. Thus, we can use resulting batted ball data, called launch angle
+          and exit velocity, to determine the trajectory of each batted ball.
+          </p>
+
+          <p>
+          If the trajectory of a batted ball is a pure representation of the batter's
+          contribution to a play, then it is the defenders who introduce some
+          confounding factors in our measurement of their performance. Since the
+          batter's control over the outcome of a play ends when the ball is struck
+          (besides running the bases), the defenders have some measure of control over
+          whether balls in play are recorded as outs, home runs, or anything in
+          between. The unfortunate part for purposes of our measurement efforts is
+          that the performance of a defender is just luck on the part of the batter.
+          For instance, consider two balls hit with same trajectory (exit velocity and
+          launch angle). One fast defender may sprint and catch the ball for an out
+          where another slower defender may fail to reach the ball, resulting in a
+          base hit. Under all of the statistical paradigms we have consider so far,
+          the first batter would be penalized for an out while the second would be
+          rewarded for a hit, even though their performance at the plate was the same.
+          It is this inconsistency that we hope to correct.
+          </p>
+
+          <div class="container-fluid center">
+            <div class="row imagetiles">
+              <div class="col-md-6">
+                <img src="/images/robbed1.gif" alt="Loading" title="Robbed1" class="img-fluid imgbox">
+              </div>
+              <div class="col-md-6">
+                <img src="/images/robbed2.gif" alt="Loading" title="Robbed2" class="img-fluid imgbox">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md"><p class="caption">These two batted balls are great
+                performances by the batters, but they get unlucky when the
+                defenders make spectacular plays they can't control.</p></div>
+            </div>
+          </div>
+
+          <p>
+          In order to avoid the confounding factor of defense and insted rely on the
+          quality of contact of each batted ball, we turn to Statcast. Using the
+          Luanch Angle and Exit Velocity of each ball in play, we can compare such
+          events to all similar ones in the Statcast era and see whether batted balls
+          with the same trajectories are most likely to be recorded as outs, singles,
+          home runs, or any other outcome. Thus, to find the value contributed by a
+          ball in play, we find its composite value based on the probability it will
+          turn into an out, single, or any other result and based on the linear
+          weights of each event corresponding to the run value of each (from FanGraphs
+          Guts). For instance, if a player strikes the ball at 90 MPH at an angle of
+          25&deg there could be a 55% chance of an out, a 30% chance of a single, and
+          a 15% chance of a double. To find the value of such an event, we can
+          multiply each of these probabilities by their expected run value. If we do
+          this each time a hitter comes up to the plate, we can base our measure of
+          their performance only on the quality of their contact, not on the result
+          called on the field. Likewise, all of the inputs into our performance vector
+          using this method are now derived entirely from actions the batter takes,
+          not those of the defenders.
+          </p>
+
+          <hr class="my-4">
+          <p class="center">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapsexwOBA" aria-expanded="false" aria-controls="collapsexwOBA" class="btn float-right">
+              You lost me there! Slower this time.
+            </button>
+          </p>
+          <div class="collapse" id="collapsexwOBA">
+            <p class="card card-body">
+              Say a player makes contact with the ball such that it is traveling at a
+              particular speed and launch angle. We can check every Statcast-recorded
+              batted ball with the same speed and launch angle to see how many of
+              those turned into singles, doubles, triples, home runs, and outs. So for
+              that hit, we can find the probability that it will end up being
+              resulting in each of those events. Now, to find the performance of a
+              player, instead of adding up the number of outs, singles, etc., we add
+              up the probabilties of each result from each batted ball to get the
+              expected number of outs, singles, etc. $$\vec{~p} = \begin{bmatrix} 0\\
+              1\\ 0\\ 0\\ 0\\ 0 \end{bmatrix} + \begin{bmatrix} 0\\ 1\\ 0\\ 0\\ 0\\ 0
+              \end{bmatrix} + \begin{bmatrix} 0\\ 0\\ 0\\ 0\\ 1\\ 0 \end{bmatrix}
+              \rightarrow \vec{~p} = \begin{bmatrix} 0.130\\ 0.456\\ 0.314\\ 0.051\\
+              0.040\\ 0.009 \end{bmatrix} + \begin{bmatrix} 0.270\\ 0.116\\ 0.344\\
+              0.022\\ 0.140\\ 0.007 \end{bmatrix} + \begin{bmatrix} 0.020\\ 0.136\\
+              0.214\\ 0.181\\ 0.250\\ 0.209 \end{bmatrix}$$ Notice that the total of
+              all of the elements still sums to one in each case, but now we are just
+              accounting for multiple possible events for each batted ball. We can
+              then take the dot product of this performance vector with the weights
+              vector as normal.
+            </p>
+          </div>
+          <hr class="my-4">
+
+          <div class="container-fluid center">
+            <div class="row imagetiles">
+              <div class="col-md-12">
+                <img src="/images/spraychart.png" alt="Loading" title="Spray Chart" class="img-fluid imgbox">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md"><p class="caption">A spray chart of balls hit at 101
+                MPH with a launch angle of 34&deg, showing that for this trajectory
+                half of batted balls are outs and of the other half, most are home
+                runs. We can use this data to calculate the expected value of a hit of
+                this type from FanGraphs Guts. Spray chart based on data from Baseball
+                Savant.</p></div>
+            </div>
+          </div>
+
+          <div class="container-fluid center">
+            <div class="row imagetiles">
+              <div class="col-md-12">
+                <img src="/images/hitprobability.png" alt="Loading" title="Hit Probability" class="img-fluid imgbox">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md"><p class="caption">An excellent plot from FiveThirtyEight showing the expected scoring value for batted balls with different trajectories.</p></div>
+            </div>
+          </div>
+
+          <p>
+          Using these principles, we are now ready to calculate expected-wOBA (xwOBA).
+          We sum the cumulative probabilities that a player hits a single from the
+          trajectories of each batted ball to find the total expected number of
+          singles, just like we would have summed the number of actual singles that
+          occured using the previous methods. Doing the same for the other types of
+          events, we can now replace the contents of the performance vector with
+          expected values based on quality of contact. (We should note, however, that
+          walks and hit-by-pitch events are still recorded using on-field calls here,
+          since defense and baserunning are not involved with either of those events.)
+          </p>
+
+          <p>$$\vec{p}_{xwOBA} \cdot \vec{w}_{xwOBA} = \begin{bmatrix} 1B_x\\
+            2B_x\\ 3B_x\\ HR_x\\ uBB\\ HBP \end{bmatrix} \cdot \begin{bmatrix}
+            w_1\\ w_2\\ w_3\\ w_4\\ w_5\\ w_6 \end{bmatrix}$$</p>
+          <p>$$xwOBA = \frac{\vec{p}_{wOBA} \cdot \vec{w}_{wOBA}}
+            {AB+uBB+HBP+SF} =$$</p>
+          <p>$$\frac{w_1 \cdot 1B_x + w_2 \cdot 2B_x + w_3 \cdot 3B_x +
+            w_4 \cdot HR_x + w_5 \cdot uBB + w_6 \cdot HBP}{AB+uBB+HBP+SF}$$</p>
+
+          <h3>xwOBA and Performance at the Plate</h3>
+
+          <p>
+          Now that we have arrived at this point, it will be instructive to examine
+          some real-world data to see whether the theory of expected performance based
+          on quality of contact holds up. First, let's simply test whether a player's
+          wOBA and xwOBA are similar during the year, as a sanity check. We can see
+          from the plots below that the relationship is quite linear, lending credence
+          to the theory so far.
+          </p>
+
+          <div class="container-fluid center">
+            <div class="row imagetiles">
+              <div class="col-md-4">
+                <img src="/images/xw2015.png" alt="Loading" title="xw2015" class="img-fluid imgbox-med">
+              </div>
+              <div class="col-md-4">
+                <img src="/images/xw2016.png" alt="Loading" title="xw2016" class="img-fluid imgbox-med">
+              </div>
+              <div class="col-md-4">
+                <img src="/images/xw2017.png" alt="Loading" title="xw2017" class="img-fluid imgbox-med">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md"><p class="caption">Comparisons of the wOBA and xWOBA
+                amongst qualified players (those with at least 502 at-bats, a large
+                enough sample size to be meaningful) in each of the years Statcast has
+                collected data uniformly throughout the league. The relationships
+                between the two metrics have R<sup>2</sup> values of 0.72, 0.65, and
+                0.69, respectively. Statcast data sourced from Baseball Savant and
+                analysed by me in R.</p></div>
+            </div>
+          </div>
+
+          <p>
+          In addition to our goal of understanding the performance of players, it
+          would be useful to see whether or not xwOBA is a more reliable measure of
+          future performance than wOBA. To determine whether this is true, we can test
+          how tightly linked the performance of a player in one year is with that of
+          the following year. Conceptually, this means that if in fact quality of
+          contact is a better measure of talent level than called results, then it
+          should predict future called results better than they predict themselves. (A
+          note for the statistically-minded: xwOBA is intended to be descriptive not
+          predictive, but we are forced to make this slight transgression in absence
+          of data outside of the three-year Statcast era. Predictive measures like
+          PECOTA use player comparables.) To test this, we plot players' wOBA and
+          xwOBA in one year against their wOBA in the following year. Since we are now
+          limited to players who are qualified hitters (recall that this means they
+          have had at least 502 at-bats) in all three years, so the sample size is now
+          around 300, down from around 450 previously. We would expect the
+          relationship to be less linear, since we are now making comparisons between
+          years, but we do still see that xwOBA in in fact a better predictor of
+          future performance! The R<sup>2</sup> values of the plots using wOBA as a
+          predictor are both 0.16 and the R<sup>2</sup> values of the plots using
+          xwOBA as a predictor are both 0.19.
+          </p>
+
+          <div class="container-fluid center">
+            <div class="row imagetiles">
+              <div class="col-md-6">
+                <img src="/images/wpredict2016.png" alt="Loading" title="wpredict2016" class="img-fluid imgbox">
+              </div>
+              <div class="col-md-6">
+                <img src="/images/wpredict2017.png" alt="Loading" title="wpredict2017" class="img-fluid imgbox">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md"><p class="caption">Comparisons of players' wOBA in
+                one year with their wOBA in the following year amongst players
+                qualified in both years (those with at least 502 at-bats, a large
+                enough sample size to be meaningful) in each of the years Statcast has
+                collected data uniformly throughout the league. The relationships
+                between the two metrics have R<sup>2</sup> values of 0.16 and 0.16,
+                respectively. Statcast data sourced from Baseball Savant and analysed
+                by me in R.</p></div>
+            </div>
+          </div>
+
+          <div class="container-fluid center">
+            <div class="row imagetiles">
+              <div class="col-md-6">
+                <img src="/images/xpredict2016.png" alt="Loading" title="xpredict2016" class="img-fluid imgbox">
+              </div>
+              <div class="col-md-6">
+                <img src="/images/xpredict2017.png" alt="Loading" title="xpredict2017" class="img-fluid imgbox">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md"><p class="caption">Comparisons of players' xwOBA in
+                one year with their wOBA in the following year amongst players
+                qualified in both years (those with at least 502 at-bats, a large
+                enough sample size to be meaningful) in each of the years Statcast has
+                collected data uniformly throughout the league. The relationships
+                between the two metrics have R<sup>2</sup> values of 0.19 and 0.19,
+                respectively. Statcast data sourced from Baseball Savant and analysed
+                by me in R.</p></div>
+            </div>
+          </div>
+
+          <h3>Outside Factors</h3>
+
+          <p>
+          Lastly, let's consider some of the factors still not accounted for in xwOBA.
+          The two most significant ones are baserunning and park factors. Park factors
+          are corrections necessitated by the differences between baseball stadiums,
+          since baseball is very unique among other common sports in that it allows
+          the physical shape and distance of the outfield to vary from park to park.
+          </p>
+
+          <div class="container-fluid center">
+            <div class="row imagetiles">
+              <div class="col-md-6">
+                <img src="/images/coors-field.jpg" alt="Loading" title="coors-field" class="img-fluid imgbox">
+              </div>
+              <div class="col-md-6">
+                <img src="/images/citi-field.jpg" alt="Loading" title="citi-field" class="img-fluid imgbox">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md"><p class="caption">Coors Field of the Colorado
+              Rockies, on the left, is the most hitter-friendly stadium in the league
+              due to its relatively close outfield wall, and Citi Field of the New
+              York Mets, on the right, is the most pitcher-friendly stadium in the
+              league due to its relatively distant outfield wall.</p></div>
+            </div>
+          </div>
+
+          <p>
+          While we would need to adjust for differing park geometries if we were using
+          a metric other than xwOBA, they actually doesn't matter here! This is
+          because we measure only the exit velocity and launch angle of batted balls,
+          and not the calls on the field. For instance, a 350-foot batted ball in
+          Coors Field that goes past the outfield wall and falls for a home run might
+          be inside the outfield wall in Citi Field and get caught for an out.
+          However, in either case we only consider the exit velocity and launch angle
+          of the batted ball in our measure of xwOBA, so these two plays would count
+          the same for the hitter. This is the same method by which defensive
+          considerations were removed from our evaluation of hitters.
+          </p>
+
+          <p>
+          Baserunning does have an effect here, since once players make contact with
+          the ball, they run the bases as fast as possible to reach base before being
+          tagged out. This can effect wOBA, since running the bases very fast can, for
+          instance, help turn the same batted ball from a single into a double.
+          However, while it does effect the calls on the field, it does not actually
+          effect performance at the plate. Since we are trying to measure plate
+          performance alone, the lack of input from baserunning into our metric is
+          actually a good thing. If we were instead trying to measure offensive
+          performance as a whole, we could add it back in. Thats suggests that in our
+          exploration of xwOBA we have effectively limited any potential confounding
+          factors in the metric but luck!
+          </p>
+
+          <p>
+          To test this conjecture, let's determine the extent to which we can chalk
+          the difference in between player's wOBA and xWOBA up to baserunning ability.
+          Deviations between a player's wOBA and xwOBA are due to some combination of
+          defense, baserunning, and luck, so if we plot a player's baserunning value
+          againt the difference between their xwOBA and wOBA, we should expect to see
+          that higher baserunning value causes players to "beat" their xwOBA. This
+          means that, for instance, they would use their speed to cause a batted ball
+          that may have gone for a double for others into a triple for them.
+          </p>
+
+          <div class="container-fluid center">
+            <div class="row imagetiles">
+              <div class="col-md-12">
+                <img src="/images/bsr.png" alt="Loading" title="bsr" class="img-fluid imgbox">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md"><p class="caption">Comparison of players'
+                baserunning value via BsR with the amount that their xwOBA exceeded
+                wOBA. The relationship has an R<sup>2</sup> value of 0.27.</p></div>
+            </div>
+          </div>
+
+          <p>
+          The relationship indicates that baserunning is indeed a factor
+          differentiating xwOBA from wOBA, and since the R<sup>2</sup> value was 0.27,
+          we can reasonably say that the remainder of the difference is likely due to
+          some combination of defense and luck.
+          </p>
+
+          <p>
+          As a whole, this means that xwOBA is measuring what we expected, which is
+          solely performance at the plate, leaving baserunning and defense out of the
+          picture and resulting in metric based simply on player performance and luck,
+          which is as good as we can hope for from a statistical perspective.
+          </p>
+
+          <h3>Conclusion</h3>
+
+          <p>
+          This report uses existing data generated by Statcast and compiled by
+          Fangraphs and Baseball Savant to perform a novel analysis of the theoretical
+          and practical applications of the metric. Based on these analyses, we can
+          see that metrics based on quality of contact such as xwOBA can improve our
+          measurement of player performance, despite not explicitly taking into
+          account their past performance. This is because we can more directly measure
+          the actions of a batter, rather than using the called results as a proxy for
+          the player's actions. Thus, Statcast Exit Velocy and Launch Angle data allow
+          for an improvement in the measurement of player performance via xwOBA
+          relative to existing techniques.
+          </p>
+
+          <h3>Resources</h3>
+          <p><ul>
+          <li>Hit probability background: https://www.mlb.com/news/statcast-introduces-hit-probability-for-2017/c-217705412</li>
+          <li>Hit probability defintion: http://m.mlb.com/glossary/statcast/hit-probability</li>
+          <li>xwOBA definition: http://m.mlb.com/glossary/statcast/expected-woba</li>
+          <li>xwOBA background: https://www.fangraphs.com/blogs/how-i-use-xwoba/</li>
+          <li>wOBA and xwOBA: https://www.fangraphs.com/blogs/what-can-statcast-tell-us-this-early-in-the-season/</li>
+          <li>Baserunning and xwOBA-wOBA: https://www.fangraphs.com/blogs/how-to-beat-statcasts-hitting-metric/</li>
+          <li>Guts for every season since 1871: https://www.fangraphs.com/guts.aspx?type=cn</li>
+          <li>FiveThirtyEight EV/LA Hit Probability Plot: https://fivethirtyeight.com/features/the-new-science-of-hitting/</li>
+          <li>Linear weights explanation: https://www.fangraphs.com/library/principles/linear-weights/</li>
+          <li>RE24 explanation: https://www.fangraphs.com/library/misc/re24/</li>
+          </ul></p>
+
+        </div>
+        <div class="col-sm-2 left"></div>
+      </div>
     </div>
-    <hr class="my-4">
 
-    <p>
-    The metric resulting from the use of linear weights is called weighted
-    on-base average, or wOBA. It uses nearly the same performance vector as OBP
-    and uses the linear weight values from Fangraphs Guts as the weight vector.
-    </p>
 
-    <p>$$\vec{p}_{wOBA} \cdot \vec{w}_{wOBA} = \begin{bmatrix} 1B\\
-      2B\\ 3B\\ HR\\ uBB\\ HBP \end{bmatrix} \cdot \begin{bmatrix} w_1\\ w_2\\
-      w_3\\ w_4\\ w_5\\ w_6 \end{bmatrix}$$</p>
-    <p>$$wOBA = \frac{\vec{p}_{wOBA} \cdot \vec{w}_{wOBA}}
-      {AB+uBB+HBP+SF} =$$</p>
-    <p>$$\frac{w_1 \cdot 1B + w_2 \cdot 2B + w_3 \cdot 3B + w_4
-      \cdot HR + w_5 \cdot uBB + w_6 \cdot HBP}{AB+uBB+HBP+SF}$$</p>
-
-    <p>
-    While this may at first appear complex, it is really just the same model we
-    have been working with, only now the weights are a bit more abstract. To
-    give you a sense of what they might look like, the linear weights from the
-    2017 season are shown below.
-    </p>
-
-    <p>$$\vec{w}_{wOBA} = \begin{bmatrix} w_{1B}=0.887\\
-      w_{2B}=1.232\\ w_{3B}=1.552\\ w_{HR}=1.980\\ w_{uBB}=0.693\\ w_{HBP}=0.723
-      \end{bmatrix}$$</p>
-
-    <p>
-    These values are much closer together than we may have guessed, especially
-    considering that slugging percentage was weighting home runs four times as
-    much as singles! We can see that in reality, they are worth a bit more than
-    twice as much.
-    </p>
-
-    <p>
-    wOBA does a very good job at determining the average value that hitters
-    provide when they come to the plate (and for that reason it forms the basis
-    of metrics that aim to value total offensive contribution in terms of wins,
-    like WAR). However, there is another subtle conceptual question to address,
-    and in order to answer it we must delve into relatively uncharted
-    statistical waters and call into question the very way in which our data are
-    measured.
-    </p>
-
-    <p>
-    Thus far, and for the several centuries that baseball has been played and
-    its outcomes recorded, the results of plays are classified based on an
-    official game score. These are compiled in box scores, which have kept the
-    offical record of the results as called on the field since the 1800s. All of
-    the data feeding into the metrics we have considered thus far can be derived
-    from the same types of box scores. However, the introduction of Statcast by
-    the MLB in the 2006 postseason and the subsequent rollout to all stadiums in
-    the 2015 season has allowed us to collect far more granular data about
-    events on the field than simple hits and outs. Statcast simulates the
-    binocular vision of the eyes using two cameras which gather depth perception
-    data when combined with radar. This allows for the position and velocity of
-    the ball and all of the players on the field to be recorded at very high
-    fidelity. Thus, we can use resulting batted ball data, called launch angle
-    and exit velocity, to determine the trajectory of each batted ball.
-    </p>
-
-    <p>
-    If the trajectory of a batted ball is a pure representation of the batter's
-    contribution to a play, then it is the defenders who introduce some
-    confounding factors in our measurement of their performance. Since the
-    batter's control over the outcome of a play ends when the ball is struck
-    (besides running the bases), the defenders have some measure of control over
-    whether balls in play are recorded as outs, home runs, or anything in
-    between. The unfortunate part for purposes of our measurement efforts is
-    that the performance of a defender is just luck on the part of the batter.
-    For instance, consider two balls hit with same trajectory (exit velocity and
-    launch angle). One fast defender may sprint and catch the ball for an out
-    where another slower defender may fail to reach the ball, resulting in a
-    base hit. Under all of the statistical paradigms we have consider so far,
-    the first batter would be penalized for an out while the second would be
-    rewarded for a hit, even though their performance at the plate was the same.
-    It is this inconsistency that we hope to correct.
-    </p>
-
-    <div class="container-fluid center">
-      <div class="row imagetiles">
-        <div class="col-md-6">
-          <img src="/images/robbed1.gif" alt="Loading" title="Robbed1" class="img-fluid imgbox">
-        </div>
-        <div class="col-md-6">
-          <img src="/images/robbed2.gif" alt="Loading" title="Robbed2" class="img-fluid imgbox">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md"><p class="caption">These two batted balls are great
-          performances by the batters, but they get unlucky when the
-          defenders make spectacular plays they can't control.</p></div>
-      </div>
-    </div>
-
-    <p>
-    In order to avoid the confounding factor of defense and insted rely on the
-    quality of contact of each batted ball, we turn to Statcast. Using the
-    Luanch Angle and Exit Velocity of each ball in play, we can compare such
-    events to all similar ones in the Statcast era and see whether batted balls
-    with the same trajectories are most likely to be recorded as outs, singles,
-    home runs, or any other outcome. Thus, to find the value contributed by a
-    ball in play, we find its composite value based on the probability it will
-    turn into an out, single, or any other result and based on the linear
-    weights of each event corresponding to the run value of each (from FanGraphs
-    Guts). For instance, if a player strikes the ball at 90 MPH at an angle of
-    25&deg there could be a 55% chance of an out, a 30% chance of a single, and
-    a 15% chance of a double. To find the value of such an event, we can
-    multiply each of these probabilities by their expected run value. If we do
-    this each time a hitter comes up to the plate, we can base our measure of
-    their performance only on the quality of their contact, not on the result
-    called on the field. Likewise, all of the inputs into our performance vector
-    using this method are now derived entirely from actions the batter takes,
-    not those of the defenders.
-    </p>
-
-    <hr class="my-4">
-    <p class="center">
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapsexwOBA" aria-expanded="false" aria-controls="collapsexwOBA" class="btn float-right">
-        You lost me there! Slower this time.
-      </button>
-    </p>
-    <div class="collapse" id="collapsexwOBA">
-      <p class="card card-body">
-        Say a player makes contact with the ball such that it is traveling at a
-        particular speed and launch angle. We can check every Statcast-recorded
-        batted ball with the same speed and launch angle to see how many of
-        those turned into singles, doubles, triples, home runs, and outs. So for
-        that hit, we can find the probability that it will end up being
-        resulting in each of those events. Now, to find the performance of a
-        player, instead of adding up the number of outs, singles, etc., we add
-        up the probabilties of each result from each batted ball to get the
-        expected number of outs, singles, etc. $$\vec{~p} = \begin{bmatrix} 0\\
-        1\\ 0\\ 0\\ 0\\ 0 \end{bmatrix} + \begin{bmatrix} 0\\ 1\\ 0\\ 0\\ 0\\ 0
-        \end{bmatrix} + \begin{bmatrix} 0\\ 0\\ 0\\ 0\\ 1\\ 0 \end{bmatrix}
-        \rightarrow \vec{~p} = \begin{bmatrix} 0.130\\ 0.456\\ 0.314\\ 0.051\\
-        0.040\\ 0.009 \end{bmatrix} + \begin{bmatrix} 0.270\\ 0.116\\ 0.344\\
-        0.022\\ 0.140\\ 0.007 \end{bmatrix} + \begin{bmatrix} 0.020\\ 0.136\\
-        0.214\\ 0.181\\ 0.250\\ 0.209 \end{bmatrix}$$ Notice that the total of
-        all of the elements still sums to one in each case, but now we are just
-        accounting for multiple possible events for each batted ball. We can
-        then take the dot product of this performance vector with the weights
-        vector as normal.
-      </p>
-    </div>
-    <hr class="my-4">
-
-    <div class="container-fluid center">
-      <div class="row imagetiles">
-        <div class="col-md-12">
-          <img src="/images/spraychart.png" alt="Loading" title="Spray Chart" class="img-fluid imgbox">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md"><p class="caption">A spray chart of balls hit at 101
-          MPH with a launch angle of 34&deg, showing that for this trajectory
-          half of batted balls are outs and of the other half, most are home
-          runs. We can use this data to calculate the expected value of a hit of
-          this type from FanGraphs Guts. Spray chart based on data from Baseball
-          Savant.</p></div>
-      </div>
-    </div>
-
-    <div class="container-fluid center">
-      <div class="row imagetiles">
-        <div class="col-md-12">
-          <img src="/images/hitprobability.png" alt="Loading" title="Hit Probability" class="img-fluid imgbox">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md"><p class="caption">An excellent plot from FiveThirtyEight showing the expected scoring value for batted balls with different trajectories.</p></div>
-      </div>
-    </div>
-
-    <p>
-    Using these principles, we are now ready to calculate expected-wOBA (xwOBA).
-    We sum the cumulative probabilities that a player hits a single from the
-    trajectories of each batted ball to find the total expected number of
-    singles, just like we would have summed the number of actual singles that
-    occured using the previous methods. Doing the same for the other types of
-    events, we can now replace the contents of the performance vector with
-    expected values based on quality of contact. (We should note, however, that
-    walks and hit-by-pitch events are still recorded using on-field calls here,
-    since defense and baserunning are not involved with either of those events.)
-    </p>
-
-    <p>$$\vec{p}_{xwOBA} \cdot \vec{w}_{xwOBA} = \begin{bmatrix} 1B_x\\
-      2B_x\\ 3B_x\\ HR_x\\ uBB\\ HBP \end{bmatrix} \cdot \begin{bmatrix}
-      w_1\\ w_2\\ w_3\\ w_4\\ w_5\\ w_6 \end{bmatrix}$$</p>
-    <p>$$xwOBA = \frac{\vec{p}_{wOBA} \cdot \vec{w}_{wOBA}}
-      {AB+uBB+HBP+SF} =$$</p>
-    <p>$$\frac{w_1 \cdot 1B_x + w_2 \cdot 2B_x + w_3 \cdot 3B_x +
-      w_4 \cdot HR_x + w_5 \cdot uBB + w_6 \cdot HBP}{AB+uBB+HBP+SF}$$</p>
-
-    <h3>xwOBA and Performance at the Plate</h3>
-
-    <p>
-    Now that we have arrived at this point, it will be instructive to examine
-    some real-world data to see whether the theory of expected performance based
-    on quality of contact holds up. First, let's simply test whether a player's
-    wOBA and xwOBA are similar during the year, as a sanity check. We can see
-    from the plots below that the relationship is quite linear, lending credence
-    to the theory so far.
-    </p>
-
-    <div class="container-fluid center">
-      <div class="row imagetiles">
-        <div class="col-md-4">
-          <img src="/images/xw2015.png" alt="Loading" title="xw2015" class="img-fluid imgbox-med">
-        </div>
-        <div class="col-md-4">
-          <img src="/images/xw2016.png" alt="Loading" title="xw2016" class="img-fluid imgbox-med">
-        </div>
-        <div class="col-md-4">
-          <img src="/images/xw2017.png" alt="Loading" title="xw2017" class="img-fluid imgbox-med">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md"><p class="caption">Comparisons of the wOBA and xWOBA
-          amongst qualified players (those with at least 502 at-bats, a large
-          enough sample size to be meaningful) in each of the years Statcast has
-          collected data uniformly throughout the league. The relationships
-          between the two metrics have R<sup>2</sup> values of 0.72, 0.65, and
-          0.69, respectively. Statcast data sourced from Baseball Savant and
-          analysed by me in R.</p></div>
-      </div>
-    </div>
-
-    <p>
-    In addition to our goal of understanding the performance of players, it
-    would be useful to see whether or not xwOBA is a more reliable measure of
-    future performance than wOBA. To determine whether this is true, we can test
-    how tightly linked the performance of a player in one year is with that of
-    the following year. Conceptually, this means that if in fact quality of
-    contact is a better measure of talent level than called results, then it
-    should predict future called results better than they predict themselves. (A
-    note for the statistically-minded: xwOBA is intended to be descriptive not
-    predictive, but we are forced to make this slight transgression in absence
-    of data outside of the three-year Statcast era. Predictive measures like
-    PECOTA use player comparables.) To test this, we plot players' wOBA and
-    xwOBA in one year against their wOBA in the following year. Since we are now
-    limited to players who are qualified hitters (recall that this means they
-    have had at least 502 at-bats) in all three years, so the sample size is now
-    around 300, down from around 450 previously. We would expect the
-    relationship to be less linear, since we are now making comparisons between
-    years, but we do still see that xwOBA in in fact a better predictor of
-    future performance! The R<sup>2</sup> values of the plots using wOBA as a
-    predictor are both 0.16 and the R<sup>2</sup> values of the plots using
-    xwOBA as a predictor are both 0.19.
-    </p>
-
-    <div class="container-fluid center">
-      <div class="row imagetiles">
-        <div class="col-md-6">
-          <img src="/images/wpredict2016.png" alt="Loading" title="wpredict2016" class="img-fluid imgbox">
-        </div>
-        <div class="col-md-6">
-          <img src="/images/wpredict2017.png" alt="Loading" title="wpredict2017" class="img-fluid imgbox">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md"><p class="caption">Comparisons of players' wOBA in
-          one year with their wOBA in the following year amongst players
-          qualified in both years (those with at least 502 at-bats, a large
-          enough sample size to be meaningful) in each of the years Statcast has
-          collected data uniformly throughout the league. The relationships
-          between the two metrics have R<sup>2</sup> values of 0.16 and 0.16,
-          respectively. Statcast data sourced from Baseball Savant and analysed
-          by me in R.</p></div>
-      </div>
-    </div>
-
-    <div class="container-fluid center">
-      <div class="row imagetiles">
-        <div class="col-md-6">
-          <img src="/images/xpredict2016.png" alt="Loading" title="xpredict2016" class="img-fluid imgbox">
-        </div>
-        <div class="col-md-6">
-          <img src="/images/xpredict2017.png" alt="Loading" title="xpredict2017" class="img-fluid imgbox">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md"><p class="caption">Comparisons of players' xwOBA in
-          one year with their wOBA in the following year amongst players
-          qualified in both years (those with at least 502 at-bats, a large
-          enough sample size to be meaningful) in each of the years Statcast has
-          collected data uniformly throughout the league. The relationships
-          between the two metrics have R<sup>2</sup> values of 0.19 and 0.19,
-          respectively. Statcast data sourced from Baseball Savant and analysed
-          by me in R.</p></div>
-      </div>
-    </div>
-
-    <h3>Outside Factors</h3>
-
-    <p>
-    Lastly, let's consider some of the factors still not accounted for in xwOBA.
-    The two most significant ones are baserunning and park factors. Park factors
-    are corrections necessitated by the differences between baseball stadiums,
-    since baseball is very unique among other common sports in that it allows
-    the physical shape and distance of the outfield to vary from park to park.
-    </p>
-
-    <div class="container-fluid center">
-      <div class="row imagetiles">
-        <div class="col-md-6">
-          <img src="/images/coors-field.jpg" alt="Loading" title="coors-field" class="img-fluid imgbox">
-        </div>
-        <div class="col-md-6">
-          <img src="/images/citi-field.jpg" alt="Loading" title="citi-field" class="img-fluid imgbox">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md"><p class="caption">Coors Field of the Colorado
-        Rockies, on the left, is the most hitter-friendly stadium in the league
-        due to its relatively close outfield wall, and Citi Field of the New
-        York Mets, on the right, is the most pitcher-friendly stadium in the
-        league due to its relatively distant outfield wall.</p></div>
-      </div>
-    </div>
-
-    <p>
-    While we would need to adjust for differing park geometries if we were using
-    a metric other than xwOBA, they actually doesn't matter here! This is
-    because we measure only the exit velocity and launch angle of batted balls,
-    and not the calls on the field. For instance, a 350-foot batted ball in
-    Coors Field that goes past the outfield wall and falls for a home run might
-    be inside the outfield wall in Citi Field and get caught for an out.
-    However, in either case we only consider the exit velocity and launch angle
-    of the batted ball in our measure of xwOBA, so these two plays would count
-    the same for the hitter. This is the same method by which defensive
-    considerations were removed from our evaluation of hitters.
-    </p>
-
-    <p>
-    Baserunning does have an effect here, since once players make contact with
-    the ball, they run the bases as fast as possible to reach base before being
-    tagged out. This can effect wOBA, since running the bases very fast can, for
-    instance, help turn the same batted ball from a single into a double.
-    However, while it does effect the calls on the field, it does not actually
-    effect performance at the plate. Since we are trying to measure plate
-    performance alone, the lack of input from baserunning into our metric is
-    actually a good thing. If we were instead trying to measure offensive
-    performance as a whole, we could add it back in. Thats suggests that in our
-    exploration of xwOBA we have effectively limited any potential confounding
-    factors in the metric but luck!
-    </p>
-
-    <p>
-    To test this conjecture, let's determine the extent to which we can chalk
-    the difference in between player's wOBA and xWOBA up to baserunning ability.
-    Deviations between a player's wOBA and xwOBA are due to some combination of
-    defense, baserunning, and luck, so if we plot a player's baserunning value
-    againt the difference between their xwOBA and wOBA, we should expect to see
-    that higher baserunning value causes players to "beat" their xwOBA. This
-    means that, for instance, they would use their speed to cause a batted ball
-    that may have gone for a double for others into a triple for them.
-    </p>
-
-    <div class="container-fluid center">
-      <div class="row imagetiles">
-        <div class="col-md-12">
-          <img src="/images/bsr.png" alt="Loading" title="bsr" class="img-fluid imgbox">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md"><p class="caption">Comparison of players'
-          baserunning value via BsR with the amount that their xwOBA exceeded
-          wOBA. The relationship has an R<sup>2</sup> value of 0.27.</p></div>
-      </div>
-    </div>
-
-    <p>
-    The relationship indicates that baserunning is indeed a factor
-    differentiating xwOBA from wOBA, and since the R<sup>2</sup> value was 0.27,
-    we can reasonably say that the remainder of the difference is likely due to
-    some combination of defense and luck.
-    </p>
-
-    <p>
-    As a whole, this means that xwOBA is measuring what we expected, which is
-    solely performance at the plate, leaving baserunning and defense out of the
-    picture and resulting in metric based simply on player performance and luck,
-    which is as good as we can hope for from a statistical perspective.
-    </p>
-
-    <h3>Conclusion</h3>
-
-    <p>
-    This report uses existing data generated by Statcast and compiled by
-    Fangraphs and Baseball Savant to perform a novel analysis of the theoretical
-    and practical applications of the metric. Based on these analyses, we can
-    see that metrics based on quality of contact such as xwOBA can improve our
-    measurement of player performance, despite not explicitly taking into
-    account their past performance. This is because we can more directly measure
-    the actions of a batter, rather than using the called results as a proxy for
-    the player's actions. Thus, Statcast Exit Velocy and Launch Angle data allow
-    for an improvement in the measurement of player performance via xwOBA
-    relative to existing techniques.
-    </p>
-
-    <h3>Resources</h3>
-    <p><ul>
-    <li>Hit probability background: https://www.mlb.com/news/statcast-introduces-hit-probability-for-2017/c-217705412</li>
-    <li>Hit probability defintion: http://m.mlb.com/glossary/statcast/hit-probability</li>
-    <li>xwOBA definition: http://m.mlb.com/glossary/statcast/expected-woba</li>
-    <li>xwOBA background: https://www.fangraphs.com/blogs/how-i-use-xwoba/</li>
-    <li>wOBA and xwOBA: https://www.fangraphs.com/blogs/what-can-statcast-tell-us-this-early-in-the-season/</li>
-    <li>Baserunning and xwOBA-wOBA: https://www.fangraphs.com/blogs/how-to-beat-statcasts-hitting-metric/</li>
-    <li>Guts for every season since 1871: https://www.fangraphs.com/guts.aspx?type=cn</li>
-    <li>FiveThirtyEight EV/LA Hit Probability Plot: https://fivethirtyeight.com/features/the-new-science-of-hitting/</li>
-    <li>Linear weights explanation: https://www.fangraphs.com/library/principles/linear-weights/</li>
-    <li>RE24 explanation: https://www.fangraphs.com/library/misc/re24/</li>
-    </ul></p>
 
     <script>renderMathInElement(document.body);</script>
 
