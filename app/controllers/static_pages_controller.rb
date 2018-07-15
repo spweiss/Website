@@ -4,4 +4,6 @@ class StaticPagesController < ApplicationController
   end
   def article
   end
+  def bio
+  end
 end

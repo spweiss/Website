@@ -3,5 +3,6 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
   get '/article', to: 'static_pages#article'
+  get '/bio', to: 'static_pages#bio'
   get '/render', to: 'static_pages#render'
 end
