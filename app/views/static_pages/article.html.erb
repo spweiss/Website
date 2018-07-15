@@ -17,11 +17,15 @@
     <p><br><br></p>
 
     <p>
-    Before we delve into any weighty concepts, let's cover some background on
-    baseball and statistics that will be instructive for later sections. Even if
-    you recognize some of the terms used early on, I encourage you to read
-    through the explanations to pick up the frameworks that will be used later
-    on.
+    The goal of this paper is to examine whether a new source of data rolled out
+    by Major League Baseball in 2015 can allow us to determine the performance
+    of players better than that performance can predict itself. Before we delve
+    into any weighty concepts, however, let's cover some background on baseball
+    and statistics that will be instructive for later sections. Even if you
+    recognize some of the terms used early on, I encourage you to read through
+    the explanations to pick up the frameworks that will be needed to understand
+    the crux of the paper. If you do happen to be a Sabermetrics expert, though,
+    feel free to skip to the latter sections.
     </p>
 
     <h3>Background</h3>
@@ -186,6 +190,8 @@
     </p>
 
     <p>$$OPS=OBP+SLG=\frac{H+BB+HBP}{AB+BB+HBP+SF}+\frac{TB}{AB}$$</p>
+
+    <h3>Advanced Metrics</h3>
 
     <p>
     OPS does a much better job at encapsulating hitter performance than the
@@ -482,6 +488,8 @@
     <p>$$\frac{w_1 \cdot 1B_x + w_2 \cdot 2B_x + w_3 \cdot 3B_x +
       w_4 \cdot HR_x + w_5 \cdot uBB + w_6 \cdot HBP}{AB+uBB+HBP+SF}$$</p>
 
+    <h3>xwOBA and Performance at the Plate</h3>
+
     <p>
     Now that we have arrived at this point, it will be instructive to examine
     some real-world data to see whether the theory of expected performance based
@@ -579,6 +587,8 @@
       </div>
     </div>
 
+    <h3>Outside Factors</h3>
+
     <p>
     Lastly, let's consider some of the factors still not accounted for in xwOBA.
     The two most significant ones are baserunning and park factors. Park factors
@@ -663,7 +673,21 @@
     some combination of defense and luck.
     </p>
 
-    <p><ul class="caption">
+    <p>
+    As a whole, this means that xwOBA is measuring what we expected, which is
+    solely performance at the plate, leaving baserunning and defense out of the
+    picture and leaving us with simply player performance and luck, which is as
+    good as we can hope for from a statistical perspective.
+    </p>
+
+    <h3>Conclusion</h3>
+
+    <p>
+    CONCLUDE SOMETHING!!!!!
+    </p>
+
+    <h3>Resources</h3>
+    <p><ul>
     <li>Hit probability background: https://www.mlb.com/news/statcast-introduces-hit-probability-for-2017/c-217705412</li>
     <li>Hit probability defintion: http://m.mlb.com/glossary/statcast/hit-probability</li>
     <li>xwOBA definition: http://m.mlb.com/glossary/statcast/expected-woba</li>
