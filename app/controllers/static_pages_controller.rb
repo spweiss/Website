@@ -2,7 +2,7 @@ class StaticPagesController < ApplicationController
 
   def home
   end
-  def article
+  def saber
   end
   def bio
   end
