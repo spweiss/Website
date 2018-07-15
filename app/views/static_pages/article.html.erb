@@ -513,21 +513,21 @@
     future performance than wOBA. To determine whether this is true, we can test
     how tightly linked the performance of a player in one year is with that of
     the following year. Conceptually, this means that if in fact quality of
-    contact is a better measure of talent level, then it should predict future
-    performance better than past performance predcits future perforance. (A note
-    for the statistically-minded: xwOBA is intended to be descriptive not
+    contact is a better measure of talent level than called results, then it
+    should predict future called results better than they predict themselves. (A
+    note for the statistically-minded: xwOBA is intended to be descriptive not
     predictive, but we are forced to make this slight transgression in absence
     of data outside of the three-year Statcast era. Predictive measures like
     PECOTA use player comparables.) To test this, we plot players' wOBA and
     xwOBA in one year against their wOBA in the following year. Since we are now
     limited to players who are qualified hitters (recall that this means they
-    have had many at-bats) in all three years, so the sample size is now around
-    300, down from around 450 previously. We would expect the relationship to be
-    less linear, since we are now making comparisons between years, but we do
-    see that xwOBA in in fact a better predictor of future performance! The
-    R<sup>2</sup> values of the plots using wOBA as a predictor are both 0.16
-    and the R<sup>2</sup> values of the plots using xwOBA as a predictor are
-    both 0.19.
+    have had at least 502 at-bats) in all three years, so the sample size is now
+    around 300, down from around 450 previously. We would expect the
+    relationship to be less linear, since we are now making comparisons between
+    years, but we do still see that xwOBA in in fact a better predictor of
+    future performance! The R<sup>2</sup> values of the plots using wOBA as a
+    predictor are both 0.16 and the R<sup>2</sup> values of the plots using
+    xwOBA as a predictor are both 0.19.
     </p>
 
     <div class="container-fluid center">
@@ -575,9 +575,9 @@
     <p>
     Lastly, let's consider some of the factors still not accounted for in xwOBA.
     The two most significant ones are baserunning and park factors. Park factors
-    are caused by the differences between baseball stadiums, since baseball is a
-    very unique sport in that it allows the physical shape and distance of the
-    outfield to vary from park to park.
+    are corrections necessitated by the differences between baseball stadiums,
+    since baseball is very unique among other common sports in that it allows
+    the physical shape and distance of the outfield to vary from park to park.
     </p>
 
     <div class="container-fluid center">
@@ -591,34 +591,37 @@
       </div>
       <div class="row">
         <div class="col-md"><p class="caption">Coors Field of the Colorado
-        Rockies, on the left, is the most hitter-friendly in the league due to
-        its relatively close outfield wall, and Citi Field of the New York Mets,
-        on the right, is the most pitcher-friendly in the league due to its
-        relatively distant outfield wall.</p></div>
+        Rockies, on the left, is the most hitter-friendly stadium in the league
+        due to its relatively close outfield wall, and Citi Field of the New
+        York Mets, on the right, is the most pitcher-friendly stadium in the
+        league due to its relatively distant outfield wall.</p></div>
       </div>
     </div>
 
     <p>
-    While this is something we would need to adjust for if we were using a
-    metric other than xwOBA, it actually doesn't matter here! This is because we
-    measure only the exit velocity and launch angle of batted balls, and not
-    the calls on the field. For instance, a 300-foot hit that falls for a home
-    run in Coors Field but is caught for an out in Citi Field counts the same
-    in either case in our measure of xwOBA, in the same way that defensive
-    considerations were stripped out.
+    While we would need to adjust for differing park geometries if we were using
+    a metric other than xwOBA, they actually doesn't matter here! This is
+    because we measure only the exit velocity and launch angle of batted balls,
+    and not the calls on the field. For instance, a 350-foot batted ball in
+    Coors Field that goes past the outfield wall and falls for a home run might
+    be inside the outfield wall in Citi Field and get caught for an out.
+    However, in either case we only consider the exit velocity and launch angle
+    of the batted ball in our measure of xwOBA, so these two plays would count
+    the same for the hitter. This is the same method by which defensive
+    considerations were removed from our evaluation of hitters.
     </p>
 
     <p>
     Baserunning does have an effect here, since once players make contact with
     the ball, they run the bases as fast as possible to reach base before being
     tagged out. This can effect wOBA, since running the bases very fast can help
-    turn the same batted ball from a single into a double. However, while does
-    effect the calls on the field, it does not actually effect to performance at
-    the plate. Since we are trying to measure purely plate performance, the lack
-    of input from baserunning into our metric is actually a good thing. If we
-    were trying to measure offensive performance as a whole, we could add it
-    back in. Thats means that we have effectively limited any unconsidered
-    factors in the metric to luck!
+    turn the same batted ball from a single into a double. However, while it
+    does effect the calls on the field, it does not actually effect performance
+    at the plate. Since we are trying to measure plate performance alone, the
+    lack of input from baserunning into our metric is actually a good thing. If
+    we were instead trying to measure offensive performance as a whole, we could
+    add it back in. Thats suggests that in our exploration of xwOBA we have
+    effectively limited any unconsidered factors in the metric but luck!
     </p>
 
     <p>
