@@ -19,9 +19,8 @@ nav {
   font-size: 5em;
 }
 
-b {
-  padding-top: 20vh;
-  position: absolute;
+div {
+  // padding-top: 45vh;
 }
 
 h1 {
@@ -49,25 +48,66 @@ img {
   padding-bottom: 1.25em;
 }
 
+.vert-center-lg {
+  margin-top: 47.5vh;
+}
+
+.vert-center-md-1 {
+  margin-top: 40vh;
+}
+
+.vert-center-md-2 {
+  margin-top: 30vh;
+}
+
+.margin-left {
+  margin-left: 20vh;
+}
+
+.imgbox-lg {
+  max-width: 50vw;
+}
+
 .imgbox {
   max-width: 25vw;
 }
 
-.imgbox-tight {
+.imgbox-med {
   max-width: 20vw;
 }
 
-.startColor {
+.imgbox-tight {
+  max-width: 5vw;
+}
+
+.imgbox-tiny {
+  max-width: 3vw;
+}
+
+.startBlack {
   background: black;
   transition: 0.3s all;
 }
 
-.changeColor {
+.startWhite {
   background: white;
+  transition: 0.3s all;
+}
+
+.changeColorWhite {
+  background: white;
+}
+
+.changeColorTan {
+  background: tan;
 }
 
 .center {
   text-align: center;
+}
+
+.left {
+  text-align: left;
 }
 
 .tiny {
@@ -86,10 +126,6 @@ img {
   padding-right: 20%;
 }
 
-.background-color {
-  background-color: #a6a6a6;
-}
-
 .jumbotron {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   border-radius: 20px;
@@ -98,9 +134,18 @@ img {
   padding-right: 5%;
 }
 
+.background-blue {
+  background-color: #99ddff;
+}
+
+.background-grey {
+  background-color: #e6e6e6;
+}
+
 .page {
   width: 100vw;
   height: 100vh;
+  position: relative;
 }
 
 .shadow {
