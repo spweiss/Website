@@ -22,3 +22,14 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+
+
+
+
+
+
+
+
+
+Cloudflare SSL encryption and certification
