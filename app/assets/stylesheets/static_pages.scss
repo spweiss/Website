@@ -99,6 +99,11 @@ img {
   transition: 0.3s all;
 }
 
+.startGrey {
+  background: lightgrey;
+  transition: 0.3s all;
+}
+
 .changeColorWhite {
   background: white;
 }
@@ -109,6 +114,10 @@ img {
 
 .changeColorGrey {
   background: lightgrey;
+}
+
+.changeColorCyan {
+  background: cyan;
 }
 
 .center {
