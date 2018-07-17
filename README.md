@@ -33,3 +33,6 @@ Things you may want to cover:
 
 
 Cloudflare SSL encryption and certification
+Responsive Web Design
+Model-View Controller
+Representational State Transfer
