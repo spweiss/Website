@@ -1,17 +1,17 @@
 # Spencer Weiss' Personal Site
 
-##Background
+## Background
 
 This site is intended to display a portfolio of some of the things that I've
 worked on recently and host information about me. Feel free to reach out to me
 at [spweiss@seas.upenn.edu](mailto:spweiss@seas.upenn.edu) if you have any
 questions!
 
-##View
+## View
 
 View the site in production [here](https://www.spencerweiss.com).
 
-##Technical Details
+## Technical Details
 
 This site was build by hand according to several best practices for web and
 mobile development, including Representational State Transfer,
