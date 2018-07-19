@@ -6,4 +6,6 @@ class StaticPagesController < ApplicationController
   end
   def bio
   end
+  def nature
+  end
 end

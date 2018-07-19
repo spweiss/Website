@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   get '/saber', to: 'static_pages#saber'
   get '/bio', to: 'static_pages#bio'
   get '/render', to: 'static_pages#render'
+  get '/nature', to: 'static_pages#nature'
 end
