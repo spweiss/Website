@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get '/bio', to: 'static_pages#bio'
   get '/render', to: 'static_pages#render'
   get '/nature', to: 'static_pages#nature'
+  get '/minesweeper', to: 'static_pages#minesweeper'
 end

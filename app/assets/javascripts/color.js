@@ -25,6 +25,12 @@ $(function() {
         if ($(this).scrollTop() < $(".page").height() * 3.70) {
            $("div").removeClass("changeColorCyan")
         }
+        if ($(this).scrollTop() > $(".page").height() * 4.70) {
+           $("div").addClass("changeColorGreen")
+        }
+        if ($(this).scrollTop() < $(".page").height() * 4.70) {
+           $("div").removeClass("changeColorGreen")
+        }
       }
    });
 });

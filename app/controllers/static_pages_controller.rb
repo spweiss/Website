@@ -8,4 +8,6 @@ class StaticPagesController < ApplicationController
   end
   def nature
   end
+  def minesweeper
+  end
 end
